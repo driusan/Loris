@@ -36,6 +36,7 @@ class UserPermissions
      */
     private $permissions = [];
 
+    private \LORIS\LorisInstance $lorisinstance;
 
     /**
      * Constructor
@@ -303,7 +304,7 @@ class UserPermissions
             WHERE up.userID = :UID
                 ORDER BY p.categoryID, m.Name, p.description";
         $results = $DB->pselect($query, ['UID' => $this->userID]);
-        $modules = \Module::getActiveModulesIndexed($DB);
+        $modules = \Module::getActiveModulesIndexed($this->lorisinstance);
         // Build new meaningful description from combination of columns
         // Module Long Name: action description
         foreach ($results as $key=>$perm) {

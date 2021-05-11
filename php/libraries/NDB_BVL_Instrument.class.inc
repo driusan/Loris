@@ -239,7 +239,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
                 // since it isn't a real module, but it's required for the page
                 // constructor.
                 $loris,
-                Module::factory("instruments"),
+                Module::factory($loris, "instruments"),
                 $page,
                 $commentID,
                 $commentID,
@@ -258,7 +258,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             // Now go ahead and instantiate it
             $obj = new $class(
                 $loris,
-                Module::factory("instruments"),
+                Module::factory($loris, "instruments"),
                 $page,
                 $commentID,
                 $commentID,
