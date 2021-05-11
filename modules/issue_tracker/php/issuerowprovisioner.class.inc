@@ -35,6 +35,8 @@ class IssueRowProvisioner extends \LORIS\Data\Provisioners\DBRowProvisioner
 
     /**
      * Create a IssueRowProvisioner, which gets rows for the issues menu table.
+     *
+     * @param \LORIS\LorisInstance $loris the LORIS instance with the issues
      */
     function __construct(\LORIS\LorisInstance $loris)
     {
@@ -43,7 +45,7 @@ class IssueRowProvisioner extends \LORIS\Data\Provisioners\DBRowProvisioner
         $this->_siteList = array_keys(\Utility::getSiteList(false));
         $userID          = $user->getUsername();
 
-	$this->lorisinstance = $loris;
+        $this->lorisinstance = $loris;
 
         //note that this needs to be in the same order as the headers array
         parent::__construct(

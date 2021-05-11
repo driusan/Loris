@@ -489,7 +489,7 @@ function getComments($issueID)
 
     // getActiveModules only uses the database connection, so just
     // fake it until we port this to a real page class.
-    $loris = new \LORIS\LorisInstance($db, new \NDB_Config(), []);
+    $loris   = new \LORIS\LorisInstance($db, new \NDB_Config(), []);
     $modules = \Module::getActiveModulesIndexed($loris);
     //looping by reference so can edit in place
     foreach ($unformattedComments as &$comment) {
@@ -711,7 +711,7 @@ function getIssueFields()
         }
     }
 
-    $loris = new \LORIS\LorisInstance($db, new \NDB_Config(), []);
+    $loris      = new \LORIS\LorisInstance($db, new \NDB_Config(), []);
     $allmodules = \Module::getActiveModulesIndexed($loris);
 
     $modules = [];
