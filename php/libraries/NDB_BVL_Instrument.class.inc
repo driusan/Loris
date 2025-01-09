@@ -3146,14 +3146,11 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             ['v_commentid' => $this->getCommentId()]
         );
 
-        $dataentry      = $row['dataentry'] ?? null;
-        $administration = $row['administration'] ?? null;
-        $validity       = $row['validity'] ?? null;
-
+	// tryFrom instead of from because the columns are nullable.
         $this->flags = new \InstrumentFlags(
-            $dataentry,
-            $administration,
-            $validity
+            \LORIS\Instruments\Flags\DataEntry::tryFrom($row['dataentry']),
+            \LORIS\Instruments\Flags\Administration::tryFrom($row['administration']),
+            \LORIS\Instruments\Flags\Administration::tryFrom($row['validity']),
         );
         return $this->flags;
     }

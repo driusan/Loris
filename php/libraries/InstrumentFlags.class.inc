@@ -23,8 +23,6 @@
  */
 class InstrumentFlags
 {
-    private ?string $_dataentry;
-    private ?string $_administration;
     private ?string $_validity;
 
     /**
@@ -35,12 +33,10 @@ class InstrumentFlags
      * @param ?string $validity       A value for validity
      */
     public function __construct(
-        ?string $dataentry,
-        ?string $administration,
+        public readonly ?\LORIS\Instruments\Flags\DataEntry $DataEntry,
+        public readonly ?\LORIS\Instruments\Flags\Administration $Administration,
         ?string $validity
     ) {
-        $this->_dataentry      = $dataentry;
-        $this->_administration = $administration;
         $this->_validity       = $validity;
     }
 
@@ -52,8 +48,8 @@ class InstrumentFlags
     public function toArray(): array
     {
         return [
-            'Data_entry'     => $this->_dataentry,
-            'Administration' => $this->_administration,
+            'Data_entry'     => $this->DataEntry->value,
+            'Administration' => $this->Administration->value,
             'Validity'       => $this->_validity,
         ];
     }
