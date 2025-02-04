@@ -3146,7 +3146,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             ['v_commentid' => $this->getCommentId()]
         );
 
-	// tryFrom instead of from because the columns are nullable.
+        // tryFrom instead of from because the columns are nullable.
         $this->flags = new \InstrumentFlags(
             \LORIS\Instruments\Flags\DataEntry::tryFrom($row['dataentry']),
             \LORIS\Instruments\Flags\Administration::tryFrom($row['administration']),

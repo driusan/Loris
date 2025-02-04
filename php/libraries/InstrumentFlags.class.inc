@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+use \LORIS\Instruments\Flags\DataEntry;
+use \LORIS\Instruments\Flags\Administration;
+use \LORIS\Instruments\Flags\Validity;
 /**
  * This file contains the intrument flags class
  *
@@ -23,8 +26,6 @@
  */
 class InstrumentFlags
 {
-    private ?string $_validity;
-
     /**
      * Contructor
      *
@@ -35,9 +36,8 @@ class InstrumentFlags
     public function __construct(
         public readonly ?\LORIS\Instruments\Flags\DataEntry $DataEntry,
         public readonly ?\LORIS\Instruments\Flags\Administration $Administration,
-        ?string $validity
+        public readonly ?\LORIS\Instruments\Flags\Validity $Validity,
     ) {
-        $this->_validity       = $validity;
     }
 
     /**
@@ -50,7 +50,7 @@ class InstrumentFlags
         return [
             'Data_entry'     => $this->DataEntry->value,
             'Administration' => $this->Administration->value,
-            'Validity'       => $this->_validity,
+            'Validity'       => $this->Validity->value,
         ];
     }
 }
