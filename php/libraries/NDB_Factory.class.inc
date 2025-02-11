@@ -28,8 +28,6 @@ use \LORIS\StudyEntities\Candidate\CandID;
  */
 class NDB_Factory
 {
-    public static $testdb = null;
-    public static $db     = null;
     public static $config = null;
 
     private static $_couchdb    = [];
@@ -71,9 +69,6 @@ class NDB_Factory
      */
     function reset(): void
     {
-        self::$testdb = null;
-        self::$db     = null;
-
         self::$_couchdb = [];
         self::$_user    = null;
 
@@ -149,66 +144,6 @@ class NDB_Factory
     {
         self::$_user = $user;
         return $user;
-    }
-
-    /**
-     * Returns a connected reference to a database handler, or a Mock database
-     * that acts as a connected reference to a database handler.
-     *
-     * @return \Database A DB reference
-     */
-    function database(): \Database
-    {
-        $db_ref = &self::$db;
-        if ($db_ref !== null) {
-            return $db_ref;
-        }
-
-        $settings = $this->settings();
-
-        // Pass the credentials in environment variables, so that they
-        // don't potentially show up in a stack trace if something goes
-        // wrong.
-        $dbname = $settings->dbName();
-        putenv("LORIS_{$dbname}_USERNAME=" . $settings->dbUserName());
-        putenv("LORIS_{$dbname}_PASSWORD=" . $settings->dbPassword());
-        putenv("LORIS_{$dbname}_HOST=" . $settings->dbHost());
-
-        $db_ref = new Database();
-        $db_ref->connect(
-            $settings->dbName(),
-            true,
-        );
-
-        // Unset the variables now that they're no longer needed.
-        putenv("LORIS_{$dbname}_USERNAME=");
-        putenv("LORIS_{$dbname}_PASSWORD=");
-        putenv("LORIS_{$dbname}_HOST=");
-
-        self::$db = $db_ref;
-
-        $config   = \NDB_Config::singleton();
-        $loglevel = $config->getLogSettings()->getDatabaseLogLevel();
-        if ($loglevel !== "none") {
-            $db_ref->setLogger(new \LORIS\Log\ErrorLogLogger($loglevel));
-        }
-        return $db_ref;
-    }
-
-    /**
-     * Explicitly set the database singleton that is being used by the factory
-     * (Can be used for injecting test doubles)
-     *
-     * @param Database $db Database object
-     *
-     * @return Database same Database object which was passed in
-     */
-    public function setDatabase(\Database $db): \Database
-    {
-        self::$db     = $db;
-        self::$testdb = $db;
-
-        return $db;
     }
 
     /**
