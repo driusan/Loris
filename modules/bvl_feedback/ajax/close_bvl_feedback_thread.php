@@ -19,7 +19,9 @@ $user     =& User::singleton();
 $username = $user->getUsername();
 
 try {
-    $candid = new \LORIS\StudyEntities\Candidate\CandID($_POST['candID'] ?? '');
+    $candid = new \LORIS\StudyEntities\Candidate\CandID(
+        intval($_POST['candID']) ?? -1
+    );
 } catch (\DomainException $e) {
     header("HTTP/1.1 400 Bad Request");
     header("Content-Type: application/json");

@@ -129,7 +129,7 @@ abstract class SQLQueryEngine implements QueryEngine
         $DB   = $this->loris->getDatabaseConnection();
         $rows = $DB->pselectCol($query, $prepbindings);
         foreach ($rows as $candID) {
-            yield new CandID(strval($candID));
+            yield new CandID(intval($candID));
         }
     }
 

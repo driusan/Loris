@@ -23,7 +23,7 @@ namespace LORIS\StudyEntities\Candidate;
  * @license  http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
  * @link     https://www.github.com/aces/Loris/
  */
-class CandID extends ValidatableIdentifier implements \JsonSerializable
+class CandID extends \NumericIdentifier
 {
     /*
      * The minimum allowed value for valid CandIDs. Origin unclear but
@@ -33,13 +33,26 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
      * @var int
      */
     protected const MIN_VALUE = 100000;
+    protected const MAX_VALUE = 9999999999;
 
-    /*
-     * A valid CandID must have exactly this number of characters.
+    /**
+     * Default constructor
      *
-     * @var int
+     * @param int  $value The Identifier's value
+     * @param ?int $min   The minimum value for the identifier, if provided
+     * @param ?int $max   The maximum value for the identifier, if provided
+     *
+     * @throws \DomainException When the value is not valid
      */
-    protected const LENGTH_RANGE = '6,10';
+    public function __construct(
+        int $value,
+        ?int $min = null,
+        ?int $max = null
+    ) {
+        // Ignore the min/max parameters, the caller doesn't have any
+        // control over the database size
+        parent::__construct($value, self::MIN_VALUE, self::MAX_VALUE);
+    }
 
     /**
      * Returns this identifier type
@@ -49,48 +62,5 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
     public function getType(): string
     {
         return 'CandID';
-    }
-
-    /**
-     * Validate that the value of the CandID is a string of LENGTH numeric characters
-     * with integer value greater than 100000. This does not check for uniqueness
-     * in the database or any other state-related facts.
-     *
-     * This function is called by the contructor of ValidatableIdentifier
-     * to ensure that no CandID exists if its value is not valid.
-     *
-     * @param string $value The value to be validated
-     *
-     * @return bool True if the value format is valid
-     */
-    protected function validate(string $value): bool
-    {
-        $pattern = sprintf("/^[0-9]{%s}$/", self::LENGTH_RANGE);
-
-        return preg_match($pattern, $value) === 1 &&
-            intval($value) >= self::MIN_VALUE;
-    }
-
-    /**
-     * Generates a string representation of this CandID.
-     *
-     * @return string That CandID's value
-     */
-    public function __toString(): string
-    {
-        return $this->value;
-    }
-
-    /**
-     * Specify data which should be serialized to JSON.
-     * Returns data which can be serialized by json_encode(), which is a value of
-     * any type other than a resource.
-     *
-     * @see https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return string
-     */
-    public function jsonSerialize() : string
-    {
-        return $this->value;
     }
 }

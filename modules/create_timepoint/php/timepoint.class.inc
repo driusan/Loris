@@ -58,7 +58,11 @@ class Timepoint extends \NDB_Page implements ETagCalculator
         $values = $request->getQueryParams();
 
         // Verify identifier from GET query.
-        if (!$this->_verifyCreatePermissions($request, $values['identifier'])) {
+        if (!$this->_verifyCreatePermissions(
+            $request,
+            intval($values['identifier'])
+        )
+        ) {
             return new \LORIS\Http\Response\JSON\Forbidden(
                 'Forbidden'
             );
@@ -211,13 +215,13 @@ class Timepoint extends \NDB_Page implements ETagCalculator
      * Permission verification.
      *
      * @param ServerRequestInterface $request    The incoming PSR7 request.
-     * @param string                 $identifier The identifier.
+     * @param int                    $identifier The identifier.
      *
      * @return bool
      */
     private function _verifyCreatePermissions(
         ServerRequestInterface $request,
-        string $identifier
+        int $identifier
     ) : bool {
         $user      = $request->getAttribute('user');
         $candidate = \Candidate::singleton(new CandID($identifier));

@@ -73,7 +73,7 @@ class Run extends \LORIS\Http\Endpoint
                 $this->loris,
                 array_map(
                     function ($candID) {
-                        return new CandID(strval($candID));
+                        return new CandID(intval($candID));
                     },
                     $candIDs
                 ),
@@ -115,7 +115,7 @@ class Run extends \LORIS\Http\Endpoint
     private function _jsondecoded(iterable $results, array $CandIDs)
     {
         foreach ($results as $row ) {
-            if (in_array(new CandID(strval($row['CandID'])), $CandIDs)) {
+            if (in_array(new CandID($row['CandID']), $CandIDs)) {
                 yield json_decode($row['RowData']);
             }
         }

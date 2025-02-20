@@ -71,7 +71,7 @@ class Module extends \Module
         try {
             $attribute = $request->getAttribute("CandID");
             if ($attribute !== null) {
-                $candidate = \Candidate::singleton(new CandID($attribute));
+                $candidate = \Candidate::singleton($attribute);
             } else {
                 $candidate = \Candidate::singleton(new CandID($gets['candID']));
             }

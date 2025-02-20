@@ -570,7 +570,7 @@ class Query implements \LORIS\StudyEntities\AccessibleResource,
 
         return array_map(
             function ($row) {
-                return new CandID(strval($row));
+                return new CandID(intval($row));
             },
             $results
         );

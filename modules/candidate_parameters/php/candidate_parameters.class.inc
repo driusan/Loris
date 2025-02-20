@@ -41,7 +41,7 @@ class Candidate_Parameters extends \NDB_Form
      */
     function _hasAccess(\User $user) : bool
     {
-        $candidate =& \Candidate::singleton(new CandID($this->identifier));
+        $candidate =& \Candidate::singleton(new CandID(intval($this->identifier)));
 
         /* User must have one of the candidate_parameter permissions
         AND have the candidate's site. */
@@ -89,7 +89,7 @@ class Candidate_Parameters extends \NDB_Form
      */
     public function getBreadcrumbs(): \LORIS\BreadcrumbTrail
     {
-        $candidate =& \Candidate::singleton(new CandID($this->identifier));
+        $candidate =& \Candidate::singleton(new CandID(intval($this->identifier)));
         $candID    = $candidate->getCandID();
 
         return new \LORIS\BreadcrumbTrail(

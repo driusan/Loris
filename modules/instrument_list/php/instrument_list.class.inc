@@ -187,7 +187,7 @@ class Instrument_List extends \NDB_Menu_Filter
         $this->tpl_data['candID']    = $this->candidate->getCandID();
         $this->tpl_data['sessionID'] = $this->timePoint->getSessionID();
         $this->tpl_data['stage']     = \Utility::getStageUsingCandID(
-            new CandID(strval($this->tpl_data['candID']))
+            $this->tpl_data['candID']
         );
 
         // get behavioural battery for this visit (time point)
@@ -400,9 +400,11 @@ class Instrument_List extends \NDB_Menu_Filter
         $gets      = $request->getQueryParams();
         $attribute = $request->getAttribute("CandID");
         if ($attribute !== null) {
-            $candidate = \Candidate::singleton(new CandID($attribute));
+            $candidate = \Candidate::singleton($attribute);
         } else {
-            $candidate = \Candidate::singleton(new CandID($gets['candID']));
+            $candidate = \Candidate::singleton(
+                new CandID(intval($gets['candID']))
+            );
         }
 
         $attribute = $request->getAttribute("timePoint");

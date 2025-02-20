@@ -438,7 +438,7 @@ function editConsentStatusFields(\Database $db)
         http_response_code(400);
         die(json_encode(["error" => "You must supply a CandID."]));
     }
-    $candID      = new CandID($candIDParam);
+    $candID      = new CandID(intval($candIDParam));
     $candidate   = \Candidate::singleton($candID);
     $currentUser = \User::singleton();
     $uid         = $currentUser->getUsername();
@@ -601,7 +601,7 @@ function editConsentStatusFields(\Database $db)
  */
 function editCandidateDOB(\Database $db): void
 {
-    $candID       = new CandID($_POST['candID']);
+    $candID       = new CandID(intval($_POST['candID']));
     $dob          = $_POST['dob'];
     $strippedDate = null;
     if (!empty($dob)) {
@@ -629,7 +629,7 @@ function editCandidateDOB(\Database $db): void
  */
 function editCandidateDOD(\Database $db): void
 {
-    $candID       = new CandID($_POST['candID']);
+    $candID       = new CandID(intval($_POST['candID']));
     $dod          = new DateTime($_POST['dod']);
     $strippedDate = null;
     $dodString    = null;

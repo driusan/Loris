@@ -39,19 +39,15 @@ class CandID_Test extends TestCase
     public function invalidValues(): array
     {
         return [
-            ['A'],
-            ['11111a'],
-            [' 11111'],
-            ['111111a'],
-            ['a111111'],
-            ['11111111111']
+            [11111111111],
+            [3523]
         ];
     }
 
     /**
      * Test the CandID constructor with invalid values
      *
-     * @param string $invalidValue An invalid value
+     * @param int $invalidValue An invalid value
      *
      * @dataProvider invalidValues
      *
@@ -71,7 +67,7 @@ class CandID_Test extends TestCase
      */
     public function testGetType(): void
     {
-        $candid = new CandID("123456");
+        $candid = new CandID(123456);
         $this->assertEquals('CandID', $candid->getType());
     }
 
@@ -82,7 +78,7 @@ class CandID_Test extends TestCase
      */
     public function testToString(): void
     {
-        $candid = new CandID("123456");
+        $candid = new CandID(123456);
         $this->assertEquals('123456', (string) $candid);
     }
 }

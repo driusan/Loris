@@ -497,7 +497,7 @@ class UtilityTest extends TestCase
 
         $this->assertEquals(
             'Not Started',
-            Utility::getStageUsingCandID(new CandID('100001'))
+            Utility::getStageUsingCandID(new CandID(100001))
         );
     }
 

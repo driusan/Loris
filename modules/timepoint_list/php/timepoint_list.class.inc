@@ -64,7 +64,7 @@ class Timepoint_List extends \NDB_Menu
     ) : ResponseInterface {
         // FIXME: At some point this class and related classes should use a
         // Candidate object rather than passing a CandID around.
-        $this->candID = new CandID($request->getAttribute('CandID'));
+        $this->candID = $request->getAttribute('CandID');
         return parent::process($request, $handler);
     }
 

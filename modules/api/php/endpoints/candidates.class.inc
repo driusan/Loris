@@ -120,7 +120,7 @@ class Candidates extends Endpoint implements \LORIS\Middleware\ETagCalculator
 
         // Delegate to candidate specific endpoint.
         try {
-            $candID = new CandID($pathparts[1]);
+            $candID = new CandID(intval($pathparts[1]));
         } catch (\DomainException $e) {
             $apiversion = $request->getAttribute("LORIS-API-Version") ?? "unknown";
             if ($apiversion != "v0.0.4-dev") {
@@ -147,7 +147,7 @@ class Candidates extends Endpoint implements \LORIS\Middleware\ETagCalculator
             // something goes wrong at this point we should definitely
             // propagate an exception..
             assert($pscids instanceof \LORIS\Database\Query);
-            $candID = new CandID(strval($pscids->getFirstRow()["CandID"]));
+            $candID = new CandID($pscids->getFirstRow()["CandID"]);
         }
 
         try {

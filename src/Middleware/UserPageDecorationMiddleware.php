@@ -115,12 +115,10 @@ class UserPageDecorationMiddleware implements MiddlewareInterface
 
         $candID = $request->getAttribute("CandID");
         if ($candID == null && !empty($get['candID'])) {
-            $candID = $get['candID'];
+            $candID = new CandID(intval($get['candID']));
         }
         if ($candID != null) {
-            $candID    = new CandID($candID);
             $candidate = \Candidate::singleton($candID);
-
             $tpl_data['candidate'] = $candidate->getData();
         }
         $tpl_data['candID'] = $candID ?? '';

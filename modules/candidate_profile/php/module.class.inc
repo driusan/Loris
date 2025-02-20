@@ -25,7 +25,7 @@ class Module extends \Module
     {
         $candIDStr = ltrim($request->getURI()->getPath(), '/');
         try {
-            $candID    = new CandID($candIDStr);
+            $candID    = new CandID(intval($candIDStr));
             $candidate = \Candidate::singleton($candID);
 
             $request = $request->withAttribute('candidate', $candidate);

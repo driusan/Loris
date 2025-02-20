@@ -243,8 +243,8 @@ class ImagingQueryEngineTest extends TestCase
         // So does 123457.
         $this->assertTrue(is_array($result));
         $this->assertEquals(2, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
-        $this->assertEquals($result[1], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123456));
+        $this->assertEquals($result[1], new CandID(123457));
 
         // 123456 has a ScanDone = false result for visit TestBvlVisit
         // No other candidate has a ScanDone=false session.
@@ -255,7 +255,7 @@ class ImagingQueryEngineTest extends TestCase
         );
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
+        $this->assertEquals($result[0], new CandID(123456));
     }
 
     /**
@@ -276,7 +276,7 @@ class ImagingQueryEngineTest extends TestCase
         // 123456 has ScanType1 at session 1
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
+        $this->assertEquals($result[0], new CandID(123456));
 
         // 123456 has no files that aren't equal to test/abc.file
         // 123457 has files that are not equal to test/abc.file.
@@ -287,7 +287,7 @@ class ImagingQueryEngineTest extends TestCase
         );
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123457));
 
         // Both 123456 and 123457 have files that start with test/abc
         $result = iterator_to_array(
@@ -297,8 +297,8 @@ class ImagingQueryEngineTest extends TestCase
         );
         $this->assertTrue(is_array($result));
         $this->assertEquals(2, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
-        $this->assertEquals($result[1], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123456));
+        $this->assertEquals($result[1], new CandID(123457));
 
         // Both 123456 and 123457 have files that contain abc
         $result = iterator_to_array(
@@ -308,8 +308,8 @@ class ImagingQueryEngineTest extends TestCase
         );
         $this->assertTrue(is_array($result));
         $this->assertEquals(2, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
-        $this->assertEquals($result[1], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123456));
+        $this->assertEquals($result[1], new CandID(123457));
 
         // Only 123457 has files that end with abc.file1
         $result = iterator_to_array(
@@ -319,7 +319,7 @@ class ImagingQueryEngineTest extends TestCase
         );
         $this->assertTrue(is_array($result));
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123457));
     }
 
     /**
@@ -338,8 +338,8 @@ class ImagingQueryEngineTest extends TestCase
             )
         );
         $this->assertEquals(2, count($result));
-        $this->assertEquals($result[0], new CandID("123456"));
-        $this->assertEquals($result[1], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123456));
+        $this->assertEquals($result[1], new CandID(123457));
 
         // Only 123457 has a failed scan.
         $result = iterator_to_array(
@@ -348,7 +348,7 @@ class ImagingQueryEngineTest extends TestCase
             )
         );
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123457));
 
         // The failed scan is the only not Equal to pass Scan
         $result = iterator_to_array(
@@ -357,7 +357,7 @@ class ImagingQueryEngineTest extends TestCase
             )
         );
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123457));
 
         // The failed scan is still the only failed scan with an "IN" criteria
         // The failed scan is the only not Equal to pass Scan
@@ -367,7 +367,7 @@ class ImagingQueryEngineTest extends TestCase
             )
         );
         $this->assertEquals(1, count($result));
-        $this->assertEquals($result[0], new CandID("123457"));
+        $this->assertEquals($result[0], new CandID(123457));
 
         // FIXME: Exists is an option on the frontend, should test.
 
@@ -389,7 +389,7 @@ class ImagingQueryEngineTest extends TestCase
                     $this->_getDictItem("ScanType1_file"),
                     $this->_getDictItem("ScanType1_QCStatus"),
                 ],
-                [new CandID("123456"), new CandID("123457"), new CandID("123458")],
+                [new CandID(123456), new CandID(123457), new CandID(123458)],
                 null
             )
         );

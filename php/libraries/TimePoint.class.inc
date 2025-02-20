@@ -179,7 +179,7 @@ class TimePoint implements \LORIS\StudyEntities\AccessibleResource,
             $this->_timePointInfo['CohortTitle'] = $title;
 
             $this->_timePointInfo['CandID']
-                = new CandID(strval($row['CandID']));
+                = new CandID($row['CandID']);
         } else {
             // return error when 0 rows to prevent creation of an empty object
             throw new LorisException(

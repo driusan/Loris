@@ -147,7 +147,10 @@ class BaseRouter extends PrefixRouter implements RequestHandlerInterface
             if (count($components) == 1) {
                 $request = $request
                     ->withAttribute("baseurl", $baseurl->__toString())
-                    ->withAttribute("CandID", $components[0]);
+                ->withAttribute(
+                    "CandID",
+                    new \LORIS\StudyEntities\Candidate\CandID(intval($components[0]))
+                );
 
                 $module = $this->loris->getModule("timepoint_list");
                 $module->registerAutoloader();

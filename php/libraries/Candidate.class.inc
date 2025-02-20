@@ -140,7 +140,7 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
                 $this->candidateInfo[$key] = $registrationCenterID;
                 break;
             case 'CandID':
-                $this->candidateInfo[$key] = new CandID(strval($value));
+                $this->candidateInfo[$key] = new CandID($value);
                 break;
             case 'ID':
                 $this->candidateInfo[$key] = strval($value);
@@ -1328,7 +1328,7 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
                     }
                 }
                 $canddata  = new \CandidateData(
-                    candID: new CandID(strval($row['CandID'])),
+                    candID: new CandID($row['CandID']),
                     registrationProjectID: $row['RegistrationProjectID'] !== null
                     ? \ProjectID::singleton($row['RegistrationProjectID'])
                     : null,

@@ -44,7 +44,9 @@ class Create_Timepoint extends \NDB_Form
      */
     function _hasAccess(\User $user) : bool
     {
-        $this->candidate = \Candidate::singleton(new CandID($this->identifier));
+        $this->candidate = \Candidate::singleton(
+            new CandID(intval($this->identifier))
+        );
 
         // check user permissions
         return (

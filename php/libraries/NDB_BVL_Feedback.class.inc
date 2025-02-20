@@ -484,9 +484,7 @@ class NDB_BVL_Feedback
         if (!empty($this->_feedbackObjectInfo['CandID'])) {
             $query            .= " AND c.CandID = :CaID";
             $qparams['CaID']   = $this->_feedbackObjectInfo['CandID'];
-            $candidate         = Candidate::singleton(
-                new CandID(strval($qparams['CaID']))
-            );
+            $candidate         = Candidate::singleton($qparams['CaID']);
             $hasReadPermission = (
                 $hasReadPermission ||
                 $candidate->isAccessibleBy($user)
@@ -598,9 +596,7 @@ class NDB_BVL_Feedback
                                  AND ft.SessionID IS NULL
                                  AND ft.CommentID IS NULL";
             $qparams['CaID']   = $this->_feedbackObjectInfo['CandID'];
-            $candidate         = Candidate::singleton(
-                new CandID(strval($qparams['CaID']))
-            );
+            $candidate         = Candidate::singleton($qparams['CaID']);
             $hasReadPermission = (
                 $hasReadPermission ||
                 $candidate->isAccessibleBy($user)
