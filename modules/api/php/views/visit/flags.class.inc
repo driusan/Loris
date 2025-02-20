@@ -56,7 +56,7 @@ class Flags
         $isDDE = strpos($commentid, 'DDE_') === 0;
 
         $meta = [
-            'Candidate'  => $this->_timepoint->getCandID(),
+            'Candidate'  => strval($this->_timepoint->getCandID()),
             'Visit'      => $this->_timepoint->getVisitLabel(),
             'DDE'        => $isDDE,
             'Instrument' => $instrumentname,

@@ -94,7 +94,7 @@ class Dicoms
     public function toArray(): array
     {
         $meta = [
-            'CandID' => $this->_timepoint->getCandID(),
+            'CandID' => strval($this->_timepoint->getCandID()),
             'Visit'  => $this->_timepoint->getVisitLabel(),
         ];
 

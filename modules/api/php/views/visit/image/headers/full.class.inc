@@ -82,7 +82,7 @@ class Full
      */
     private function _formatMeta(): array
     {
-        $candid     = $this->_visit->getCandID();
+        $candid     = strval($this->_visit->getCandID());
         $visitlabel = $this->_visit->getVisitLabel();
         $filename   = $this->_image->getFileInfo()->getFilename();
 

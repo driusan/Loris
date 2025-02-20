@@ -45,7 +45,7 @@ class Candidate
     public function toArray(): array
     {
         $meta = [
-            'CandID'  => $this->_candidate->getCandID(),
+            'CandID'  => strval($this->_candidate->getCandID()),
             'Project' => $this->_candidate->getProjectTitle(),
             'PSCID'   => $this->_candidate->getPSCID(),
             'Site'    => $this->_candidate->getCandidateSite(),

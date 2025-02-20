@@ -49,7 +49,7 @@ class Visit
     {
         $cohortKey = $this->apiversion == 'v0.0.4-dev' ? 'Cohort' : 'Battery';
         $meta      = [
-            'CandID'   => $this->_timepoint->getCandID(),
+            'CandID'   => strval($this->_timepoint->getCandID()),
             'Visit'    => $this->_timepoint->getVisitLabel(),
             'Site'     => $this->_timepoint->getPSC(),
             $cohortKey => $this->_timepoint->getData('CohortTitle'),

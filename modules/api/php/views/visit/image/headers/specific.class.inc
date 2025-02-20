@@ -89,7 +89,7 @@ class Specific
         $filename   = $this->_image->getFileInfo()->getFilename();
 
         return [
-            'CandID' => $candid,
+            'CandID' => strval($candid),
             'Visit'  => $visitlabel,
             'File'   => $filename,
             'Header' => $this->_headername,
