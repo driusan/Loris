@@ -146,7 +146,7 @@ class CandidateTest extends TestCase
         $this->_candidateInfo = [
             'ID'                    => 111111,
             'RegistrationCenterID'  => 2,
-            'CandID'                => new CandID(969664),
+            'CandID'                => 969664,
             'PSCID'                 => 'AAA0011',
             'DoB'                   => '2007-03-02',
             'EDC'                   => null,
@@ -213,7 +213,7 @@ class CandidateTest extends TestCase
             ->method('pselectRow')
             ->willReturn($this->_candidateInfo);
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         //validate _candidate Info
         // candidateInfo is the value returned from the database, ->getData() has
@@ -255,7 +255,11 @@ class CandidateTest extends TestCase
     {
         $this->_setUpTestDoublesForSelectCandidate();
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+	// Select modifies the type of CandID, so extract it before
+	// calling select.
+	$candIDVal = $this->_candidateInfo['CandID'];
+
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $data = ['Active' => 'N'];
         //assert update method is called with correct parameters
@@ -264,7 +268,7 @@ class CandidateTest extends TestCase
             ->with(
                 'candidate',
                 $data,
-                ['CandID' => $this->_candidateInfo['CandID']]
+                ['CandID' => $$candIDVal]
             );
 
         $this->assertTrue($this->_candidate->setData($data));
@@ -282,7 +286,7 @@ class CandidateTest extends TestCase
         $this->expectException('\LorisException');
 
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->_candidate->setData([]);
     }
@@ -322,7 +326,7 @@ class CandidateTest extends TestCase
     public function testGetProjectID()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             \ProjectID::singleton($this->_candidateInfo['RegistrationProjectID']),
@@ -339,7 +343,7 @@ class CandidateTest extends TestCase
     public function testGetProjectTitle()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->_dbMock->expects($this->any())
             ->method('pselectColWithIndexKey')
@@ -357,10 +361,10 @@ class CandidateTest extends TestCase
     public function testGetCandID()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
-            $this->_candidateInfo['CandID'],
+            new CandID($this->_candidateInfo['CandID']),
             $this->_candidate->getCandID()
         );
     }
@@ -374,7 +378,7 @@ class CandidateTest extends TestCase
     public function testGetPSCID()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['PSCID'],
@@ -391,7 +395,7 @@ class CandidateTest extends TestCase
     public function testGetCandidateSite()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(
             $this->_candidateInfo['PSC'],
             $this->_candidate->getCandidateSite()
@@ -406,7 +410,7 @@ class CandidateTest extends TestCase
     public function testGetCenterID()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(
             \CenterID::singleton($this->_candidateInfo['RegistrationCenterID']),
             $this->_candidate->getCenterID()
@@ -421,7 +425,7 @@ class CandidateTest extends TestCase
     public function testGetCandidateDoB()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(
             $this->_candidateInfo['DoB'],
             $this->_candidate->getCandidateDoB()
@@ -438,7 +442,7 @@ class CandidateTest extends TestCase
     public function testGetCandidateEDC()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['EDC'],
@@ -455,7 +459,7 @@ class CandidateTest extends TestCase
     public function testGetCandidateSex()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['Sex'],
@@ -488,7 +492,7 @@ class CandidateTest extends TestCase
     public function testIsActive()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['Active'],
@@ -505,7 +509,7 @@ class CandidateTest extends TestCase
     public function testRegisteredBy()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['RegisteredBy'],
@@ -522,7 +526,7 @@ class CandidateTest extends TestCase
     public function testLastRecordChangeBy()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidateInfo['UserID'],
@@ -588,7 +592,7 @@ class CandidateTest extends TestCase
         ];
 
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->_dbMock->expects($this->once())
             ->method('pselect')
             ->with(
@@ -651,7 +655,7 @@ class CandidateTest extends TestCase
             ->willReturn($this->_candidateInfo);
 
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->_dbMock->expects($this->any())
             ->method('pselect')
@@ -692,7 +696,7 @@ class CandidateTest extends TestCase
             ->willReturn($this->_candidateInfo);
 
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->_dbMock->expects($this->any())
             ->method('pselect')
@@ -724,7 +728,7 @@ class CandidateTest extends TestCase
             ->with($this->stringContains("AND VisitNo = 1"))
             ->willReturn('V01');
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals('V01', $this->_candidate->getFirstVisit());
     }
 
@@ -743,7 +747,7 @@ class CandidateTest extends TestCase
             ->with($this->stringContains("AND VisitNo = 1"))
             ->willReturn('');
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals('', $this->_candidate->getFirstVisit());
     }
 
@@ -762,7 +766,7 @@ class CandidateTest extends TestCase
             ->with($this->stringContains("SELECT MAX(s.VisitNo)+1"))
             ->willReturn('2');
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(2, $this->_candidate->getNextVisitNo());
     }
 
@@ -781,7 +785,7 @@ class CandidateTest extends TestCase
             ->with($this->stringContains("SELECT MAX(s.VisitNo)+1"))
             ->willReturn(null);
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(1, $this->_candidate->getNextVisitNo());
     }
     /**
@@ -793,7 +797,7 @@ class CandidateTest extends TestCase
     public function testGetAgeReturnsCorrectDateTimeInterval()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $referenceDate = new DateTime('2020-02-25');
         $this->assertEquals(12, $this->_candidate->getAge($referenceDate)->y);
@@ -809,7 +813,7 @@ class CandidateTest extends TestCase
     public function testGetAgeInYearsReturnsIntYears()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidate->getAge()->format('%y'),
@@ -825,7 +829,7 @@ class CandidateTest extends TestCase
     public function testGetAgeInMonthsReturnsMonths()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $expectedAge = intval($this->_candidate->getAge()->format('%m'))
                + 12
@@ -841,7 +845,7 @@ class CandidateTest extends TestCase
     public function testGetAgeInDaysReturnsDays()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertEquals(
             $this->_candidate->getAge()->days,
@@ -904,7 +908,7 @@ class CandidateTest extends TestCase
                 )
             );
 
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->assertEquals(97, $this->_candidate->getSessionID(1));
         $this->assertEquals(98, $this->_candidate->getSessionID(2));
     }
@@ -918,7 +922,7 @@ class CandidateTest extends TestCase
     public function testGetSessionIDReturnsNullForNoneExistingVisit()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $this->assertNull($this->_candidate->getSessionID(0));
     }
@@ -938,7 +942,7 @@ class CandidateTest extends TestCase
 
         $this->assertTrue(
             Candidate::candidateExists(
-                $this->_candidateInfo['CandID'],
+                new CandID($this->_candidateInfo['CandID']),
                 'AAA0011'
             )
         );
@@ -1071,7 +1075,7 @@ class CandidateTest extends TestCase
     public function testGetConsents()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
 
         $result = [
             ['ConsentID'     => 1,
@@ -1173,7 +1177,7 @@ class CandidateTest extends TestCase
     public function testParticipantStatusDescription()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->_setUpMockDB();
         $this->_DB->setFakeTableData(
             "participant_status_options",
@@ -1218,7 +1222,7 @@ class CandidateTest extends TestCase
     function testIsAccessibleBy()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $user = $this->getMockBuilder('\User')
             ->onlyMethods(['getCenterIDs', 'getProjectIDs'])
             ->getMock();
@@ -1242,7 +1246,7 @@ class CandidateTest extends TestCase
     function testIsAccessibleByNoProject()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->_setUpMockDB();
 
         $user = $this->getMockBuilder('\User')
@@ -1268,7 +1272,7 @@ class CandidateTest extends TestCase
     function testIsAccessibleByNoCenter()
     {
         $this->_setUpTestDoublesForSelectCandidate();
-        $this->_candidate->select($this->_candidateInfo['CandID']);
+        $this->_candidate->select(new CandID($this->_candidateInfo['CandID']));
         $this->_setUpMockDB();
 
         $user = $this->getMockBuilder('\User')->getMock();

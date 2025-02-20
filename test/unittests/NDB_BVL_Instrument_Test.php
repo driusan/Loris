@@ -1059,7 +1059,7 @@ class NDB_BVL_Instrument_Test extends TestCase
         $this->_mockDB->expects($this->any())->method('pselectRow')
             ->willReturn(
                 ['CohortID' => '2', 'ProjectID' => 1,
-                    'Visit_label' => 'V1', 'CandID' => '300123'
+                    'Visit_label' => 'V1', 'CandID' => 300123
                 ]
             );
         $this->assertEquals("V1", $this->_instrument->getVisitLabel());

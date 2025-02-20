@@ -325,7 +325,7 @@ class CandidateListTestIntegrationTest extends LorisIntegrationTestWithCandidate
         $btn = ".col-sm-12 > .row .btn";
         //to do check the url
         $this->safeClick(WebDriverBy::cssSelector($btn), 1);
-        sleep(2);
+        sleep(3);
         $URL =  $this->webDriver->executeScript("return window.location.href;");
         $this->assertStringContainsString("300001", $URL);
         $this->resetPermissions();
