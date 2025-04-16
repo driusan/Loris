@@ -29,3 +29,13 @@ msgstr ""
 
 msgid "Site: All User Sites"
 msgstr ""
+
+msgid "...never. Welcome!"
+msgstr ""
+
+msgid "Welcome, {$username}!"
+msgstr ""
+
+msgid "Last login"
+msgstr ""
+

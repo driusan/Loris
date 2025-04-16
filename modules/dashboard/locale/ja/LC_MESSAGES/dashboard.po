@@ -29,3 +29,19 @@ msgstr "サイト: すべて"
 
 msgid "Site: All User Sites"
 msgstr "サイト: すべてのユーザーサイト"
+
+msgid "...never. Welcome!"
+msgstr "…絶対にない！よろしくお願いします"
+
+# I'm not sure if "{$username}さんいらっしゃいませ" or 
+# "いらっしゃいませ{$username}さん" would be more natural
+# for a native speaker but for now I'm using this as a test
+# of changing the word order of a variable in a smarty template.
+# It's also possible that "お帰りなさい" may be better than
+# "いらっしゃいませ" for a welcome message.
+msgid "Welcome, %s!"
+msgstr "%sさんいらっしゃいませ"
+
+msgid "Last login"
+msgstr "最終ログイン"
+

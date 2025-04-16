@@ -86,34 +86,42 @@ class Module extends \Module
 
             $last_login = $user->getLastLogin($DB);
 
-            $docs         = iterator_to_array(
-                $DB->pselect(
-                    "SELECT File_name,
+            $docs = $DB->pselect(
+                "SELECT File_name,
                         Date_uploaded,
                         CONCAT(uploaded_by, '/', File_name) AS Data_dir
                  FROM document_repository
                  ORDER BY Date_uploaded DESC LIMIT 4",
-                    []
-                )
+                []
             );
-            $numberOfDocs = sizeof($docs);
-            for ($i=0; $i < $numberOfDocs; $i++) {
-                if (new \DateTime($docs[$i]['Date_uploaded']) > $last_login) {
-                    $docs[$i]['new'] = true;
-                } else {
-                    $docs[$i]['new'] = false;
-                }
-            }
 
+            $tpl_docs = [];
+            $datefmt  = new \IntlDateFormatter(
+                null,
+                \IntlDateFormatter::SHORT,
+                \IntlDateFormatter::SHORT
+            );
+            foreach ($docs as $doc) {
+                $time       = new \DateTime($doc['Date_uploaded']);
+                $tpl_docs[] = [
+                    'File_name'     => $doc['File_name'],
+                    'new'           => $time > $last_login,
+                    'Date_uploaded' => $datefmt->format($time),
+                    'Data_dir'      => $doc['Data_dir'],
+                ];
+            }
             return [
                 new \LORIS\dashboard\Widget(
                     new \LORIS\dashboard\WidgetContent(
-                        "Document Repository Notifications",
+                        dgettext(
+                            "document_repository",
+                            "Document Repository Notifications"
+                        ),
                         $this->renderTemplate(
                             "docnotifications.tpl",
                             [
                                 'baseURL'       => $baseURL,
-                                'notifications' => $docs
+                                'notifications' => $tpl_docs
                             ],
                         ),
                         ""
