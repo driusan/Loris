@@ -39,3 +39,6 @@ msgstr ""
 msgid "Last login"
 msgstr ""
 
+msgid "Views"
+msgstr ""
+

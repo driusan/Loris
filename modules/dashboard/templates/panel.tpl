@@ -4,7 +4,7 @@
         <h3 class="panel-title">{$title}</h3>
         {if !empty($menus)}
             <div class="btn-group views">
-                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">Views<span class="caret"></span></button>
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">{dgettext("dashboard", "Views")}<span class="caret"></span></button>
                 <ul class="dropdown-menu pull-right" role="menu">
                     {foreach from=$menus key=target item=label name=viewmenu}
                     <li {if $smarty.foreach.viewmenu.first}class="active"{/if}><a data-target="{$target}">{$label}</a></li>

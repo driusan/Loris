@@ -45,3 +45,6 @@ msgstr "%sさんいらっしゃいませ"
 msgid "Last login"
 msgstr "最終ログイン"
 
+msgid "Views"
+msgstr "ビュー"
+

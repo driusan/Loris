@@ -142,3 +142,6 @@ dashboard:
 publication:
 	target=publication npm run compile
 
+statistics:
+	msgfmt -o modules/statistics/locale/ja/LC_MESSAGES/statistics.mo modules/statistics/locale/ja/LC_MESSAGES/statistics.po
+	target=statistics npm run compile

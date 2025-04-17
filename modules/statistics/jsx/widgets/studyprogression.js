@@ -4,6 +4,8 @@ import Loader from 'Loader';
 import Panel from 'Panel';
 import {QueryChartForm} from './helpers/queryChartForm';
 import {setupCharts} from './helpers/chartBuilder';
+import i18n from 'I18nSetup';
+import {useTranslation} from 'react-i18next';
 
 /**
  * StudyProgression - a widget containing statistics for study data.
@@ -16,6 +18,7 @@ const StudyProgression = (props) => {
   const [showFiltersScans, setShowFiltersScans] = useState(false);
   const [showFiltersRecruitment, setShowFiltersRecruitment] = useState(false);
   const [activeView, setActiveView] = useState(0);
+  const {t, i18n} = useTranslation();
 
   let json = props.data;
 
@@ -23,11 +26,11 @@ const StudyProgression = (props) => {
     'total_scans': {
       'scans_bymonth': {
         sizing: 11,
-        title: 'Scan sessions per site',
+        title: t('Scan sessions per site'),
         filters: '',
         chartType: 'line',
         dataType: 'line',
-        label: 'Scans',
+        label: t('Scans'),
         legend: 'under',
         options: {line: 'line'},
       },
@@ -35,7 +38,7 @@ const StudyProgression = (props) => {
     'total_recruitment': {
       'siterecruitment_line': {
         sizing: 11,
-        title: 'Recruitment per site',
+        title: t('Recruitment per site'),
         filters: '',
         chartType: 'line',
         dataType: 'line',
@@ -101,7 +104,7 @@ const StudyProgression = (props) => {
                     className="btn btn-default btn-xs"
                     onClick={() => setShowFiltersScans((prev) => !prev)}
                   >
-                    {showFiltersScans ? 'Hide Filters' : 'Show Filters'}
+                    {showFiltersScans ? t('Hide Filters') : t('Show Filters')}
                   </button>
                 </div>
                 {showFiltersScans && (
@@ -120,7 +123,7 @@ const StudyProgression = (props) => {
             ) : (
               <p>There have been no scans yet.</p>
             ),
-            title: 'Study Progression - site scans',
+            title: t('Study Progression - site scans'),
             onToggleFilters: () => setShowFiltersScans((prev) => !prev),
           },
           {
@@ -140,7 +143,7 @@ const StudyProgression = (props) => {
                       className="btn btn-default btn-xs"
                       onClick={() => setShowFiltersRecruitment((prev) => !prev)}
                     >
-                      {showFiltersRecruitment ? 'Hide Filters' : 'Show Filters'}
+                      {showFiltersRecruitment ? t('Hide Filters') : t('Show Filters')}
                     </button>
                   </div>
                   {showFiltersRecruitment && (
@@ -159,7 +162,7 @@ const StudyProgression = (props) => {
               ) : (
                 <p>There have been no candidates registered yet.</p>
               ),
-            title: 'Study Progression - site recruitment',
+            title: t('Study Progression - site recruitment'),
             onToggleFilters: () => setShowFiltersRecruitment((prev) => !prev),
           },
         ]}
