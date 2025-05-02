@@ -33,4 +33,16 @@ class Module extends \Module
     {
         return 'Login';
     }
+
+    public function getWidgets(string $type, \User $user, array $options) {
+	    switch($type){
+	    case 'loginpanel':
+		    return [
+			    new LoginListPanel($this->loris, "Cohorts", \Utility::getCohortList()),
+			    new LoginListPanel($this->loris, "Sites", \Utility::getSiteList()),
+		    ];
+	    default:
+	    	return [];
+	    }
+    }
 }

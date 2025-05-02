@@ -117,6 +117,11 @@ class Login extends Endpoint
             if ($login->passwordAuthenticate($user, $password, false)) {
                 $token = $this->getEncodedToken($user);
                 if (!empty($token)) {
+		$getparams = $request->getQueryParams();
+		if($getparams['setcookie']) {
+			$this->setCookie($login);
+		}
+
                     return new \LORIS\Http\Response\JsonResponse(
                         ['token' => $token]
                     );
@@ -215,5 +220,20 @@ class Login extends Endpoint
         }
 
         return true;
+    }
+
+    private function setCookie(\SinglePointLogin $login) {
+	    session_destroy();
+        $sessionOptions = ['cookie_httponly' => true];
+        // Lax is required for third party login to maintain the State, otherwise
+        // it gets lost after the redirect.
+        $sessionOptions['cookie_samesite'] = "Lax";
+        session_start($sessionOptions);
+
+        if (!isset($_SESSION['State'])) {
+            $_SESSION['State'] =& \State::singleton();
+	    $login->setState();
+            $_SESSION['State']->setProperty('login', $login);
+        }
     }
 }

@@ -32,6 +32,7 @@ class AnonymousPageDecorationMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
+	    $loris = $request->getAttribute("loris");
         // Basic page outline variables
         $tpl_data = array(
                      'study_title' => $this->Config->getSetting('title'),
@@ -55,6 +56,15 @@ class AnonymousPageDecorationMiddleware implements MiddlewareInterface
                                     'windowName' => $WindowName,
                                    );
         }
+	$tpl_data['menus'] = [];
+	foreach($loris->getActiveModules() as $module) {
+		if($module->isPublicModule()) {
+			$label = $module->getMenuCategory();
+			if(!empty($label)) {
+				$tpl_data['menus'][] = ['link' => $this->BaseURL . '/' . $module->getName(), 'label' => $module->getLongName()];
+			}
+		}
+	}
 
         // Handle needs to be called before form action, because handle potentially
         // calls setup which modifies the $page->FormAction value (ie in the imaging

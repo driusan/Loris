@@ -38,102 +38,60 @@ h1, h2, h3, h4 {
     font-weight: 700;
 }
 
-.btn {
-    -webkit-transition: background-color 0.2s ease-in;
-    transition: background-color 0.2s ease-in;
-}
-
-.header {
-    height: 100px;
-    background-color: #064785;
-    padding: 5px 0;
-}
-
-.flex-wrapper {
+header.header {
+    background-color: rgb(228, 235, 242);
+    border-bottom-color: rgb(195, 213, 219);
+    width: 100%;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    top: 0;
+    position: sticky;
+}
+header span {
+	margin-right: 2em;
+}
+button.login-button {
+    background-color: #064785;
+    color: #f8f8f8;
+    font-size: 1.5em;
+    margin: 1ex;
 }
 
-.header .loris-logo {
-    margin-right: auto;
+nav {
+	display: block;
+	flex: 1;
 }
 
-.header .loris-logo img {
-    height: 80px;
+nav ol {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
-
-.header .github-logo {
-    margin-left: auto;
-.
-}
-
-.header .github-logo img {
-    height: 40px;
-    padding-right: 10px;
-    opacity: 0.8;
-}
-
-.header .github-logo img:hover {
-    opacity: 1;
-    -webkit-transition: opacity 0.2s ease-in;
-    transition: opacity 0.2s ease-in;
-}
-
-.header .nav-link {
-    color: #fff;
-    font-size: 22px;
-    line-height: 130px;
-}
-
-.header .study-title {
-    width: 500px;
-    padding: 0 20px;
-    color: #eee;
-    font-size: 25px;
-    line-height: 1.15;
-    font-weight: 600;
-    font-variant: small-caps;
-    text-align: center;
+nav ol li {
+	display: inline-block;
+	flex: 1;
+    padding: 0;
+    margin: 0;
 }
 
 .main-content {
-    background-color: #f8f8f8;
-    padding: 30px 0;
-    height: auto;
-    min-height: calc(100vh - 200px);
-}
-
-.main-content .study-panel,
-.main-content .login-panel {
-    min-height: 500px;
-}
-
-.main-content .login-panel form {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-.main-content .login-panel .help-links {
-    text-align: center;
-}
-
-.main-content .login-panel .help-text {
-    font-size: 12px;
-    padding: 10px 0;
-    text-align: center;
-    color: #555;
-}
-
-.main-content .study-logo {
-    max-width: 200px;
-    margin: 0 auto 10px auto;
-    padding: 15px;
-}
-
-.main-content .study-logo img {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
+
+.login-panel {
+	padding: 1em;
+	flex: 1;
+    background-color: rgb(228, 235, 242);
+    border: solid rgb(195, 213, 219);
+	margin: 1em;
+	height: 300px;
+	max-width: 300px;
+
+}
 .footer {
     font-size: 12px;
     text-align: center;
@@ -157,34 +115,13 @@ h1, h2, h3, h4 {
     padding: 20px 25px;
 }
 
-.success-message {
-    text-align: center;
-    padding: 0 20px 40px 20px;
+.loris-logo {
+	height: 50px;
+	padding-left: 1em;
+
 }
 
-/* Tablets and bigger */
-@media (min-width: 768px) {
-    .header {
-        height: 140px;
-    }
-
-    .header .loris-logo img {
-        height: 130px;
-    }
-
-    .header .github-logo {
-        padding-right: 20px;
-    }
-
-    .main-content {
-        display: flex;
-        align-items: center;
-    }
-}
-
-/* Small desktops and bigger */
-@media (min-width: 991px) {
-    .header .loris-logo {
-        margin-right: 40px;
-    }
+.bottomlogin {
+    background-color: rgb(228, 235, 242);
+    margin: 1em;
 }

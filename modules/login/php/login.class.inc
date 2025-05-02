@@ -14,39 +14,49 @@ namespace LORIS\login;
  */
 class Login extends \NDB_Page
 {
-    public $skipTemplate = true;
+	function setup() {
+		$config = $this->loris->getConfiguration();
+		$this->setTemplateVar("study_title", $config->getSetting("title"));
 
-    /**
-     * Include additional JS files
-     *
-     * @return array of javascript to be inserted
-     */
-    function getJSDependencies()
-    {
-        $factory = \NDB_Factory::singleton();
-        $baseURL = $factory->settings()->getBaseURL();
-        $deps    = parent::getJSDependencies();
-        return array_merge(
-            $deps,
-            [
-                $baseURL . '/login/js/loginIndex.js',
-            ]
-        );
-    }
-    /**
-     * Include additional CSS files:
-     *
-     * @return array of javascript to be inserted
-     */
-    function getCSSDependencies()
-    {
-        $factory = \NDB_Factory::singleton();
-        $baseURL = $factory->settings()->getBaseURL();
-        $deps    = parent::getCSSDependencies();
-        return array_merge(
-            $deps,
-            [$baseURL . '/login/css/login.css']
-        );
-    }
+		$links =$config->getExternalLinks('FooterLink');
 
+		$this->tpl_data['links'] = array();
+		foreach ($links as $label => $url) {
+			$WindowName = md5($url);
+
+			$this->tpl_data['links'][] = array(
+                                    'url'        => $url,
+                                    'label'      => $label,
+                                    'windowName' => $WindowName,
+                                   );
+		}
+
+		$this->tpl_data['infopanels'] = [];
+		foreach($this->loris->getActiveModules() as $module) {
+			// Note: A module *does not* need to be public to provide an info panel. It's up to the module to be sure it doesn't expose confidential data.
+			$panels = $module->getWidgets("loginpanel", \User::singleton(), []);
+			error_log("Panels" . count($panels));
+				foreach($panels as $panel) {
+					$this->tpl_data['infopanels'][] = $panel->__toString();
+				}
+		}
+		/*
+		$this->tpl_data['sites'] = array();
+		foreach ( \Utility::getSiteList() as $val) {
+			if(!empty($val)) {
+				$this->tpl_data['sites'][] = $val;
+			}
+		}
+
+		$this->tpl_data['cohorts'] = array();
+		foreach ( \Utility::getCohortList() as $val) {
+			if(!empty($val)) {
+				$this->tpl_data['cohorts'][] = $val;
+			}
+		}
+		 */
+		
+		$this->tpl_data["studydesc"] = $config->getSetting("StudyDescription");
+
+	}
 }

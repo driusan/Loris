@@ -9,9 +9,10 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{$study_title}</title>
-  <link rel="stylesheet" href="{$baseurl}/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{$baseurl}/css/public_layout.css">
+
   <link type="image/x-icon" rel="icon" href="{$baseurl}/images/favicon.ico">
+  <link rel="stylesheet" href="{$baseurl}/css/public_layout.css">
+   <link type="image/x-icon" rel="icon" href="{$baseurl}/images/favicon.ico">
   {section name=jsfile loop=$jsfiles}
     <script src="{$jsfiles[jsfile]}" type="text/javascript"></script>
   {/section}
@@ -19,30 +20,37 @@
   {section name=cssfile loop=$cssfiles}
     <link rel="stylesheet" href="{$cssfiles[cssfile]}">
   {/section}
+   <script src="{$baseurl}/js/components/SignInButton.js" type="text/javascript"></script>
 </head>
 <body>
   <header class="header">
-    <div class="container">
-      <div class="flex-wrapper">
-        <div class="loris-logo">
-          <a href="{$baseurl}">
-            <img src="{$baseurl}/images/LORIS_logo_white.svg" class="loris-logo" alt="Loris Logo"/>
-          </a>
-        </div>
-        <div class="study-title hidden-xs">
-          {$study_title}
-        </div>
-        <div class="github-logo">
-          <a href="https://github.com/aces/Loris" target="_blank" rel="noopener noreferrer">
-            <img src="{$baseurl}/images/GitHub-Mark-Light-64px.png" alt="Github"/>
-          </a>
-        </div>
-      </div>
-    </div>
+	<div style="margin-right: 1em">
+		<a href="{$baseurl}"><img src="{$baseurl}/images/LORIS_logo.svg" class="loris-logo" alt="Loris Logo"/></a>
+	</div>
+	<nav>
+		{if $menus}
+		<ol>
+			{foreach from=$menus item=menu}
+			<li><a href="{$menu.link}">{$menu.label}</a></li>
+			{/foreach}
+		</ol>
+		{/if}
+	</nav>
+	<div id="menusignin" />
+	<script>
+
+                ReactDOM.createRoot(
+                  document.getElementById("menusignin")
+                ).render(
+                  React.createElement(SignInButton, {
+                    BaseURL: "{$baseurl}"
+                  })
+                );
+	</script>
   </header>
 
   <section class="main-content">
-    {$workspace}
+	{$workspace}
   </section>
 
   <footer class="footer">
@@ -54,11 +62,5 @@
     </a>
     by <a href="http://mcin-cnim.ca" target="_blank">MCIN</a>
   </footer>
-  <script src="{$baseurl}/js/modernizr/modernizr.min.js"/>
-  <script>
-    if (!Modernizr.webgl) {
-      alert("Please download the latest version of Google Chrome of Mozilla Firefox in order to use Loris!");
-    }
-  </script>
 </body>
 </html>
