@@ -131,10 +131,11 @@ class CandidateListIndex extends Component {
   formatColumn(column, cell, row) {
     if (column === this.props.t('PSCID', {ns: 'loris'})) {
       let url;
+      const dccid = row[this.props.t('DCCID', {ns: "loris"})];
       if (this.props.betaProfileLink) {
-        url = this.props.baseURL + '/candidate_profile/' + row['DCCID'] + '/';
+        url = this.props.baseURL + '/candidate_profile/' + dccid + '/';
       } else {
-        url = this.props.baseURL + '/' + row['DCCID'] + '/';
+        url = this.props.baseURL + '/' + dccid + '/';
       }
 
       return <td><a href ={url}>{cell}</a></td>;
@@ -152,7 +153,8 @@ class CandidateListIndex extends Component {
       column === this.props.t('Scan Done', {ns: 'candidate_list'})
       && cell === 'Y'
     ) {
-      let url = this.props.baseURL + '/imaging_browser/?PSCID=' + row['PSCID'];
+      const pscid = row[this.props.t('PSCID', {ns: "loris"})];
+      let url = this.props.baseURL + '/imaging_browser/?PSCID=' + pscid;
       return (
         <td className="scanDoneLink">
           <a href={url}>{cell}</a></td>
