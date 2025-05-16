@@ -146,7 +146,10 @@ class CandidateListIndex extends Component {
       default: return <td>None</td>;
       }
     }
-    if (column === this.props.t('Scan Done', {ns: 'candidate_list'}) && cell === 'Y') {
+    if (
+      column === this.props.t('Scan Done', {ns: 'candidate_list'})
+      && cell === 'Y'
+    ) {
       let url = this.props.baseURL + '/imaging_browser/?PSCID=' + row['PSCID'];
       return (
         <td className="scanDoneLink">
@@ -212,7 +215,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-	      label: this.props.t('Site', {ns: 'loris'}),
+        label: this.props.t('Site', {ns: 'loris'}),
         show: true,
         filter: {
           name: 'site',
@@ -230,7 +233,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-	      label: this.props.t('Entity Type', {ns: 'candidate_list'}),
+        label: this.props.t('Entity Type', {ns: 'candidate_list'}),
         show: true,
         filter: {
           name: 'entityType',
@@ -392,6 +395,8 @@ CandidateListIndex.propTypes = {
   hasPermission: PropTypes.func.isRequired,
   betaProfileLink: PropTypes.string,
   baseURL: PropTypes.string,
+  // Provided by withTranslation HOC
+  t: PropTypes.func,
 };
 
 window.addEventListener('load', () => {
@@ -399,14 +404,15 @@ window.addEventListener('load', () => {
   i18n.addResourceBundle('ja', 'candidate_list', {
     'Entity Type': 'エンティティタイプ',
     'Scan Done': 'スキャン完了',
-	    'Visit Count': '訪問回数',
+    'Visit Count': '訪問回数',
     'Open Profile': 'プロフィールを開く',
     'Show Advanced Filters': '詳細フィルターを表示',
     'Hide Advanced Filters': '詳細フィルターを非表示',
+  });
 
-	  });
-
-  const CLIndex = withTranslation(['candidate_list', 'loris'])(CandidateListIndex);
+  const CLIndex = withTranslation(
+    ['candidate_list', 'loris']
+  )(CandidateListIndex);
   createRoot(
     document.getElementById('lorisworkspace')
   ).render(

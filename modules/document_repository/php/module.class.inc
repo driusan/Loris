@@ -97,7 +97,7 @@ class Module extends \Module
 
             $tpl_docs = [];
             $datefmt  = new \IntlDateFormatter(
-                null,
+                '',
                 \IntlDateFormatter::SHORT,
                 \IntlDateFormatter::SHORT
             );

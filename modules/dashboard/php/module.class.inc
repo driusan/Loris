@@ -105,7 +105,7 @@ class Module extends \Module
             $logindatestring = \dgettext("dashboard", "...never. Welcome!");
         } else {
             $formatter       = new \IntlDateFormatter(
-                null,
+                '',
                 \IntlDateFormatter::TRADITIONAL,
                 \IntlDateFormatter::TRADITIONAL
             );

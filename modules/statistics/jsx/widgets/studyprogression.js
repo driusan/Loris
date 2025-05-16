@@ -4,7 +4,6 @@ import Loader from 'Loader';
 import Panel from 'Panel';
 import {QueryChartForm} from './helpers/queryChartForm';
 import {setupCharts} from './helpers/chartBuilder';
-import i18n from 'I18nSetup';
 import {useTranslation} from 'react-i18next';
 
 /**
