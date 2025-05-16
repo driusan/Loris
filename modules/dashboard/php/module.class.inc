@@ -104,7 +104,11 @@ class Module extends \Module
         if ($last_login === null) {
             $logindatestring = \dgettext("dashboard", "...never. Welcome!");
         } else {
-	    $formatter = new \IntlDateFormatter(null, \IntlDateFormatter::TRADITIONAL, \IntlDateFormatter::TRADITIONAL);
+            $formatter       = new \IntlDateFormatter(
+                null,
+                \IntlDateFormatter::TRADITIONAL,
+                \IntlDateFormatter::TRADITIONAL
+            );
             $logindatestring = $formatter->format($last_login);
         }
 
