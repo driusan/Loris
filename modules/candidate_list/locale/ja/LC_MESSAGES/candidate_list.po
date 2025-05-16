@@ -21,7 +21,6 @@ msgstr ""
 msgid "Access Profile"
 msgstr "アクセスプロファイル"
 
-
 msgid "Entity Type"
 msgstr "エンティティタイプ"
 
