@@ -20,17 +20,15 @@ const StudyProgression = (props) => {
   const [activeView, setActiveView] = useState(0);
   const {t, i18n} = useTranslation(['statistics', 'loris']);
   useEffect( () => {
-console.log(loris.user.langpref);
-	  i18n.addResourceBundle("ja", 'statistics', {
-		  'Scan sessions per site': 'heeeeeeeee',
-		  'Scans': 'Xxxx',
-		  'Scans Scans': 'xxxXxxx',
-		  'Recruitment per site': 'rps',
-		  'Show Filters': 'sf',
-		  'Study Progression - site recruitment': 'SP SR',
-	  });
-	  i18n.changeLanguage(loris.user.langpref);
-	  console.log('Re-rendering ', loris.user.langpref);
+    i18n.addResourceBundle('ja', 'statistics', {
+      'Scan sessions per site': 'heeeeeeeee',
+      'Scans': 'Xxxx',
+      'Recruitment per site': 'rps',
+      'Show Filters': 'sf',
+      'Study Progression - site recruitment': 'SP SR',
+    });
+    // trigger re-render
+    i18n.changeLanguage(loris.user.langpref);
   }, [i18n]);
 
   let json = props.data;
@@ -39,11 +37,11 @@ console.log(loris.user.langpref);
     'total_scans': {
       'scans_bymonth': {
         sizing: 11,
-        title: t('Scan sessions per site', {ns: 'statistics' }),
+        title: t('Scan sessions per site', {ns: 'statistics'}),
         filters: '',
         chartType: 'line',
         dataType: 'line',
-        label: t('Scans', {ns: 'statistics' }),
+        label: t('Scans', {ns: 'statistics'}),
         legend: 'under',
         options: {line: 'line'},
       },
@@ -156,7 +154,8 @@ console.log(loris.user.langpref);
                       className="btn btn-default btn-xs"
                       onClick={() => setShowFiltersRecruitment((prev) => !prev)}
                     >
-                      {showFiltersRecruitment ? t('Hide Filters') : t('Show Filters')}
+                      {showFiltersRecruitment ?
+                        t('Hide Filters') : t('Show Filters')}
                     </button>
                   </div>
                   {showFiltersRecruitment && (
