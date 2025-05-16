@@ -12,6 +12,8 @@ import OpenProfileForm from './openProfileForm';
 import i18n from 'I18nSetup';
 import {withTranslation} from 'react-i18next';
 
+import ja_strings from '../locale/ja/LC_MESSAGES/candidate_list.json';
+
 /**
  * Candidate List
  *
@@ -401,14 +403,7 @@ CandidateListIndex.propTypes = {
 
 window.addEventListener('load', () => {
   const args = QueryString.get();
-  i18n.addResourceBundle('ja', 'candidate_list', {
-    'Entity Type': 'エンティティタイプ',
-    'Scan Done': 'スキャン完了',
-    'Visit Count': '訪問回数',
-    'Open Profile': 'プロフィールを開く',
-    'Show Advanced Filters': '詳細フィルターを表示',
-    'Hide Advanced Filters': '詳細フィルターを非表示',
-  });
+  i18n.addResourceBundle('ja', 'candidate_list', ja_strings);
 
   const CLIndex = withTranslation(
     ['candidate_list', 'loris']
