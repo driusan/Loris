@@ -121,14 +121,13 @@ class CandidateListIndex extends Component {
 
   /**
    * Modify behaviour of specified column cells in the Data Table component
-   *
    * @param {string} column - column name
    * @param {string} cell - cell content
    * @param {object} row - row content indexed by column
    * @return {*} a formated table cell for a given column
    */
   formatColumn(column, cell, row) {
-    if (column === this.props.t('PSCID', {ns: "loris"})) {
+    if (column === this.props.t('PSCID', {ns: 'loris'})) {
       let url;
       if (this.props.betaProfileLink) {
         url = this.props.baseURL + '/candidate_profile/' + row['DCCID'] + '/';
@@ -138,7 +137,7 @@ class CandidateListIndex extends Component {
 
       return <td><a href ={url}>{cell}</a></td>;
     }
-    if (column === this.props.t('Feedback', {ns: "loris"})) {
+    if (column === this.props.t('Feedback', {ns: 'loris'})) {
       switch (cell) {
       case '1': return <td style ={{background: '#E4A09E'}}>Opened</td>;
       case '2': return <td style ={{background: '#EEEEAA'}}>Answered</td>;
@@ -147,7 +146,7 @@ class CandidateListIndex extends Component {
       default: return <td>None</td>;
       }
     }
-    if (column === this.props.t('Scan Done', {ns: "candidate_list"}) && cell === 'Y') {
+    if (column === this.props.t('Scan Done', {ns: 'candidate_list'}) && cell === 'Y') {
       let url = this.props.baseURL + '/imaging_browser/?PSCID=' + row['PSCID'];
       return (
         <td className="scanDoneLink">
@@ -155,7 +154,7 @@ class CandidateListIndex extends Component {
       );
     }
 
-    if (column === this.props.t('Cohort', {ns: "loris"})) {
+    if (column === this.props.t('Cohort', {ns: 'loris'})) {
       let result = (cell) ? <td>{cell}</td> : <td></td>;
       return result;
     }
@@ -188,7 +187,7 @@ class CandidateListIndex extends Component {
     const options = this.state.fieldOptions;
     const fields = [
       {
-        label: this.props.t('PSCID',{ns: "loris"}),
+        label: this.props.t('PSCID', {ns: 'loris'}),
         show: true,
         filter: {
           name: 'pscid',
@@ -196,7 +195,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        label: this.props.t('DCCID',{ns: "loris"}),
+        label: this.props.t('DCCID', {ns: 'loris'}),
         show: true,
         filter: {
           name: 'dccid',
@@ -204,7 +203,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        label: this.props.t('Visit Label', {ns: "loris"}),
+        label: this.props.t('Visit Label', {ns: 'loris'}),
         show: false,
         filter: {
           name: 'visitLabel',
@@ -213,7 +212,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-	      label: this.props.t('Site', {ns: "loris"}),
+	      label: this.props.t('Site', {ns: 'loris'}),
         show: true,
         filter: {
           name: 'site',
@@ -222,7 +221,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Cohort', {ns: "loris"}),
+        'label': this.props.t('Cohort', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'cohort',
@@ -231,7 +230,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-	      label: this.props.t('Entity Type', {ns: "candidate_list"}),
+	      label: this.props.t('Entity Type', {ns: 'candidate_list'}),
         show: true,
         filter: {
           name: 'entityType',
@@ -243,7 +242,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Scan Done', {ns: "candidate_list"}),
+        'label': this.props.t('Scan Done', {ns: 'candidate_list'}),
         'show': true,
         'filter': {
           name: 'scanDone',
@@ -256,7 +255,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Participant Status', {ns: "loris"}),
+        'label': this.props.t('Participant Status', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'participantStatus',
@@ -266,7 +265,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('DoB', {ns: "loris"}),
+        'label': this.props.t('DoB', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'DoB',
@@ -275,7 +274,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Date of registration', {ns: "loris"}),
+        'label': this.props.t('Date of registration', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'Date_registered',
@@ -283,7 +282,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        label: this.props.t('Sex',{ns: "loris"}),
+        label: this.props.t('Sex', {ns: 'loris'}),
         show: true,
         filter: {
           name: 'sex',
@@ -293,7 +292,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Visit Count',{ns: "candidate_list"}),
+        'label': this.props.t('Visit Count', {ns: 'candidate_list'}),
         'show': true,
         'filter': {
           name: 'visitCount',
@@ -302,7 +301,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Feedback',{ns: "loris"}),
+        'label': this.props.t('Feedback', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'feedback',
@@ -318,7 +317,7 @@ class CandidateListIndex extends Component {
         },
       },
       {
-        'label': this.props.t('Project',{ns: "loris"}),
+        'label': this.props.t('Project', {ns: 'loris'}),
         'show': true,
         'filter': {
           name: 'project',
@@ -331,7 +330,7 @@ class CandidateListIndex extends Component {
     if (options.useedc === 'true') {
       fields.push(
         {
-          'label': this.props.t('EDC',{ns: "loris"}),
+          'label': this.props.t('EDC', {ns: 'loris'}),
           'show': true,
           'filter': {
             name: 'edc',
@@ -345,7 +344,7 @@ class CandidateListIndex extends Component {
     // Open profile modal window
     const profileForm = (
       <Modal
-        title={this.props.t('Open Profile', {ns: "candidate_list"})}
+        title={this.props.t('Open Profile', {ns: 'candidate_list'})}
         show={this.state.show.profileForm}
         onClose={() => {
           this.hide('profileForm');
@@ -361,13 +360,13 @@ class CandidateListIndex extends Component {
     const actions = [
       {
         label: this.state.hideFilter ?
-          this.props.t('Show Advanced Filters', {ns: "candidate_list"}) :
-          this.props.t('Hide Advanced Filters', {ns: "candidate_list"}),
+          this.props.t('Show Advanced Filters', {ns: 'candidate_list'}) :
+          this.props.t('Hide Advanced Filters', {ns: 'candidate_list'}),
         action: this.toggleFilters,
         name: 'advanced',
       },
       {
-        label: this.props.t('Open Profile', {ns:"candidate_list"}),
+        label: this.props.t('Open Profile', {ns: 'candidate_list'}),
         action: () => this.show('profileForm'),
         show: !this.props.hasPermission('access_all_profiles'),
       },
@@ -397,17 +396,17 @@ CandidateListIndex.propTypes = {
 
 window.addEventListener('load', () => {
   const args = QueryString.get();
-  i18n.addResourceBundle("ja", 'candidate_list', {
-    "Entity Type": "エンティティタイプ",
-  "Scan Done": "スキャン完了",
-	    "Visit Count": "訪問回数",
-		"Open Profile": "プロフィールを開く",
-		"Show Advanced Filters" : "詳細フィルターを表示",
-		"Hide Advanced Filters" : "詳細フィルターを非表示",
+  i18n.addResourceBundle('ja', 'candidate_list', {
+    'Entity Type': 'エンティティタイプ',
+    'Scan Done': 'スキャン完了',
+	    'Visit Count': '訪問回数',
+    'Open Profile': 'プロフィールを開く',
+    'Show Advanced Filters': '詳細フィルターを表示',
+    'Hide Advanced Filters': '詳細フィルターを非表示',
 
 	  });
 
-  const CLIndex = withTranslation(["candidate_list", "loris"])(CandidateListIndex);
+  const CLIndex = withTranslation(['candidate_list', 'loris'])(CandidateListIndex);
   createRoot(
     document.getElementById('lorisworkspace')
   ).render(
