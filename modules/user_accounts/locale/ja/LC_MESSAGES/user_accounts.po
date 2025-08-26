@@ -24,3 +24,31 @@ msgstr "ユーザーアカウント"
 msgid "Edit User"
 msgstr "ユーザーを編集"
 
+msgid "This user has no site affiliations"
+msgstr "このユーザーにはサイト所属がありません"
+
+msgid "This user has no project affiliations"
+msgstr "このユーザーはプロジェクトに所属していません"
+
+msgid "Username"
+msgstr "ユーザー名"
+
+msgid "Full Name"
+msgstr "フルネーム"
+
+msgid "Email"
+msgstr "メール"
+
+msgid "Active"
+msgstr "アクティブ"
+
+msgid "Pending Approval"
+msgstr "承認待ち"
+
+msgid "Account Request Date"
+msgstr "アカウント申請日"
+
+msgid "Add User"
+msgstr "ユーザーを追加"
+
+

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import i18n from 'I18nSetup';
 import {withTranslation} from 'react-i18next';
 import hiStrings from '../locale/hi/LC_MESSAGES/user_accounts.json';
+import jaStrings from '../locale/ja/LC_MESSAGES/user_accounts.json';
 
 import Loader from 'Loader';
 import FilterableDataTable from 'FilterableDataTable';
@@ -264,7 +265,7 @@ UserAccountsIndex.propTypes = {
 };
 
 window.addEventListener('load', () => {
-  i18n.addResourceBundle('ja', 'user_accounts', {});
+  i18n.addResourceBundle('ja', 'user_accounts', jaStrings);
   i18n.addResourceBundle('hi', 'user_accounts', hiStrings);
   const Index = withTranslation(
     ['user_accounts', 'loris']
