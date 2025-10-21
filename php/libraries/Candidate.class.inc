@@ -639,13 +639,40 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
     }
 
     /**
-     * Returns the date of birth of this candidate
+     * Returns the date of birth of this candidate.
      *
-     * @return string|null The DoB in YYYY-MM-DD format
+     * If the dobFormat LORIS config setting is set to
+     * Ym, this will be anonymized by setting the date
+     * to the 15th of the month.
+     *
+     * @return ?\DateTimeInterface The DoB
      */
-    function getCandidateDoB(): ?string
+    function getCandidateDoB(): ?\DateTimeInterface
     {
-        return $this->candidateInfo["DoB"];
+        if (empty($this->candidateInfo["DoB"])) {
+            return null;
+        }
+
+        $factory = NDB_Factory::singleton();
+        $config  = $factory->config();
+
+        $dobFormat = $config->getSetting('dobFormat');
+        $dobDate   = new \DateTime($this->candidateInfo["DoB"]);
+
+        switch ($dobFormat) {
+        case 'Ym':
+            $dobDate->setDate(
+                intval($dobDate->format("Y")),
+                intval($dobDate->format("n")),
+                15,
+            );
+            break;
+        case 'Ymd':
+            break;
+        default:
+            throw new Exception("Unhandled DoB format: $dobFormat");
+        }
+        return $dobDate;
     }
 
     /**
@@ -665,7 +692,7 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
 
         $dobFormat = $config->getSetting('dobFormat');
 
-        $dobDate = new DateTimeImmutable($this->getCandidateDoB());
+        $dobDate = $this->getCandidateDoB();
         switch ($dobFormat) {
         case 'Ym':
             return [

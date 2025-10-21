@@ -77,7 +77,7 @@ class CandidatesProvisioner extends DBRowProvisioner
      */
     public function getInstance($row) : \LORIS\Data\DataInstance
     {
-        return new CandidatesRow($row);
+        return new CandidatesRow($this->loris, $row);
     }
 }
 

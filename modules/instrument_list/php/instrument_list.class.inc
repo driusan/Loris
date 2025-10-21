@@ -302,13 +302,24 @@ class Instrument_List extends \NDB_Menu_Filter
 
         $this->tpl_data['display']
             = array_merge($this->candidate->getData(), $this->timePoint->getData());
+        $dateFormatter = new \IntlDateFormatter(
+            '',
+            \IntlDateFormatter::SHORT,
+            \IntlDateFormatter::NONE
+        );
+        foreach ($this->tpl_data['display'] as $key => &$val) {
+            if (strpos($key, "Date_") === 0 && $val !== null) {
+                $date = new \DateTimeImmutable($val);
+                $val  = $dateFormatter->format($date);
+            }
+        }
+
         // DoB to Derived Age
         $dob = $this->candidate->getCandidateDoB();
-        if (is_string($dob) && strtotime($dob) !== false) {
-            $dob_date     = new \DateTime($dob);
+        if ($dob !== null) {
             $current_date = new \DateTime();
-            $dob_year     = abs($current_date->diff($dob_date)->y);
-            $dob_month    = abs($current_date->diff($dob_date)->m);
+            $dob_year     = abs($current_date->diff($dob)->y);
+            $dob_month    = abs($current_date->diff($dob)->m);
             $dob_age      = $dob_year . dgettext("timepoint_list", " y / ")
                 . $dob_month . dgettext("timepoint_list", " m");
             $this->tpl_data['dob_age'] = $dob_age;

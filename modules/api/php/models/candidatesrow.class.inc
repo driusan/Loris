@@ -37,9 +37,11 @@ class CandidatesRow implements \LORIS\Data\DataInstance,
     /**
      * Create a new CandidatesRow.
      *
-     * @param array $row An array of candidate's properties
+     * @param protected \LORIS\LorisInstance $loris The LorisInstance object
+     * @param array                          $row   An array of candidate's
+     *                                              properties
      */
-    public function __construct(array $row)
+    public function __construct(protected \LORIS\LorisInstance $loris, array $row)
     {
         $this->_candid      = strval($row['CandID']) ?? null;
         $this->_projectname = $row['ProjectName'] ?? null;
@@ -49,7 +51,22 @@ class CandidatesRow implements \LORIS\Data\DataInstance,
         $this->_pscid    = $row['PSCID'] ?? null;
         $this->_sitename = $row['SiteName'] ?? null;
         $this->_edc      = $row['EDC'] ?? null;
-        $this->_dob      = $row['DoB'] ?? null;
+        if (isset($row['DoB'])) {
+            $format = $this->loris->getConfiguration()->getSetting("dobFormat");
+            switch ($format) {
+            case 'Ymd':
+                $this->_dob = $row['DoB'];
+                break;
+            case 'Ym':
+                $dob        = new \DateTimeImmutable($row['DoB']);
+                $this->_dob = $dob->format("Y-m-15");
+                break;
+            default:
+                throw new \LorisException("Unknown DoB format");
+            }
+        } else {
+            $this->_dob = null;
+        }
         $this->_sex      = $row['Sex'] ?? null;
         $this->_centerid = \CenterID::singleton(intval($row['CenterID']));
     }

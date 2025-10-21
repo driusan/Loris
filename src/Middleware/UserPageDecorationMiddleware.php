@@ -161,20 +161,20 @@ class UserPageDecorationMiddleware implements MiddlewareInterface
         $tpl_data['issue_tracker_url'] = $this->Config->getSetting('issue_tracker_url');
 
         // We're back in the territory of stuff that belongs here..
-
         // Variables that get passed along to the LorisHelper javascript object.
-        $tpl_data['studyParams'] = array(
-                                    'useEDC'      => $this->Config->getSetting('useEDC'),
-                                    'useProband'  => $this->Config->getSetting(
-                                        'useProband'
-                                    ),
-                                    'useFamilyID' => $this->Config->getSetting(
-                                        'useFamilyID'
-                                    ),
-                                    'useConsent'  => $this->Config->getSetting(
-                                        'useConsent'
-                                    ),
-                                   );
+        $jsSettings = [
+                       'useEDC',
+                       'useProband',
+                       'useFamilyID',
+                       'useConsent',
+                       'dobFormat',
+                      ];
+
+        $studyParams = [];
+        foreach ($jsSettings as $setting) {
+            $studyParams[$setting] = $this->Config->getSetting($setting);
+        }
+        $tpl_data['studyParams'] = $studyParams;
         $tpl_data['jsonParams']  = json_encode(
             array(
              'BaseURL'   => $this->BaseURL,

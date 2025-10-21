@@ -980,7 +980,7 @@ class TimePoint implements \LORIS\StudyEntities\AccessibleResource,
             }
         }
 
-        return $candidate->getCandidateDoB();
+        return $candidate->getCandidateDoB()->format('Y-m-d');
     }
 
     /**

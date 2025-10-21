@@ -379,11 +379,10 @@ abstract class NDB_BVL_Instrument extends NDB_Page
         // convert DoB And EDC date to years and months
         // DoB to Derived Age
         $dob = $candidate->getCandidateDoB();
-        if (is_string($dob) && strtotime($dob) !== false) {
-            $dob_date     = new \DateTime($dob);
+        if ($dob !== null) {
             $current_date = new \DateTime();
-            $dob_year     = abs($current_date->diff($dob_date)->y);
-            $dob_month    = abs($current_date->diff($dob_date)->m);
+            $dob_year     = abs($current_date->diff($dob)->y);
+            $dob_month    = abs($current_date->diff($dob)->m);
             $dob_age      = $dob_year . " y / " . $dob_month . " m";
             $this->tpl_data['dob_age'] = $dob_age;
         }

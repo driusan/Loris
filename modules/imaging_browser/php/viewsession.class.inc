@@ -952,7 +952,7 @@ class ViewSession extends \NDB_Form
 
         $candidate            =& \Candidate::singleton($timePoint->getCandID());
         $subjectData['pscid'] = $candidate->getPSCID();
-        $subjectData['dob']   = $candidate->getCandidateDoB();
+        $subjectData['dob']   = $candidate->getDisplayDoB()['value'];
         $subjectData['edc']   = $candidate->getCandidateEDC();
         $subjectData['sex']   = $candidate->getCandidateSex();
 

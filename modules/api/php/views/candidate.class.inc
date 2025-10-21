@@ -50,7 +50,7 @@ class Candidate
             'PSCID'   => $this->_candidate->getPSCID(),
             'Site'    => $this->_candidate->getCandidateSite(),
             'EDC'     => $this->_candidate->getCandidateEDC(),
-            'DoB'     => $this->_candidate->getCandidateDoB(),
+            'DoB'     => $this->_candidate->getCandidateDoB()->format('Y-m-d'),
             'Sex'     => $this->_candidate->getCandidateSex(),
         ];
 

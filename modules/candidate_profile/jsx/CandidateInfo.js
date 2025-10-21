@@ -113,14 +113,31 @@ class CandidateInfo extends Component {
    */
   render() {
     const cohorts = this.getCohorts(this.props.Visits);
-    const dateFormatter = new Intl.DateTimeFormat(
-      loris.user.langpref.replace('_', '-'),
-      {
-        style: 'short',
-        timeZone: 'UTC',
+    let dateFormatter;
+    switch (loris.config('dobFormat')) {
+    case 'Ymd':
+      dateFormatter = new Intl.DateTimeFormat(
+        loris.user.langpref.replace('_', '-'),
+        {
+          style: 'short',
+          timeZone: 'UTC',
+        }
+      );
+      break;
+    case 'Ym':
+      dateFormatter = new Intl.DateTimeFormat(
+        loris.user.langpref.replace('_', '-'),
+        {
+          year: 'numeric',
+          month: 'numeric',
+          timeZone: 'UTC',
+        }
+      );
+      break;
+    default:
+      throw new Error('Unknown dobFormat');
+    }
 
-      }
-    );
 
     const data = [
       {
