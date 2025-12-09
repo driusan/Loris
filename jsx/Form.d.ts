@@ -247,6 +247,46 @@ export class ButtonElement {
     forceUpdate(): void
 }
 
+type ctaProps = {
+    label: string
+    onUserInput?: () => void
+    buttonClass?: string
+}
+/**
+ * CTA class. See Form.js
+ */
+export class CTA {
+    props: buttonProps
+    state: any
+    context: object
+    refs: {[key: string]: ReactInstance}
+
+    /**
+     * Construct a ButtonElement
+     *
+     * @param {buttonProps} props - React props
+     */
+    constructor(props: buttonProps)
+
+    /**
+     * React lifecycle method
+     *
+     * @returns {ReactNode} - the element
+     */
+    render(): ReactNode
+
+    /**
+     * React lifecycle method
+     *
+     * @param {object} newstate - the state to override
+     */
+    setState(newstate: object): void
+
+    /**
+     * React lifecycle method.
+     */
+    forceUpdate(): void
+}
 type textboxProps = {
     name: string
     label?: string

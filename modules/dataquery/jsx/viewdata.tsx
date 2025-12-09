@@ -828,7 +828,7 @@ function organizedFormatter(
      * @param {string} cell - The cell value
      * @returns {React.ReactElement} - The table cell
      */
-    callback = (label: string, cell: string): ReactNode => {
+    callback = (label: string, cell: string|null): ReactNode => {
       return <td>{cell}</td>;
     };
     return callback;
@@ -846,7 +846,7 @@ function organizedFormatter(
      */
     callback = (
       label: string,
-      cell: string,
+      cell: string|null,
       row: TableRow,
       headers: string[],
       fieldNo: number
@@ -868,7 +868,7 @@ function organizedFormatter(
         case 'single':
         case 'unique':
         case 'optional':
-          return <TableCell data={cell} />;
+          return <TableCell data={cell||''} />;
         default:
           return (<td>
             <i>{t('(Internal Error. Unhandled cardinality: {{cardinality}})',
@@ -953,7 +953,7 @@ function organizedFormatter(
                 return <i>({t('Internal error', {ns: 'dataquery'})})</i>;
               }
             };
-            let theval = visitval(visit, cell);
+            let theval = visitval(visit, cell || '');
             if (!displayEmptyVisits && !hasdata) {
               return <div key={visit} />;
             }
@@ -1019,7 +1019,7 @@ function organizedFormatter(
               }
               return null;
             };
-            let theval = visitval(visit, cell);
+            let theval = visitval(visit, cell || '');
             if (!displayEmptyVisits && !hasdata) {
               return <div key={visit} />;
             }
@@ -1078,7 +1078,7 @@ function organizedFormatter(
      */
     callback = (
       label: string,
-      cell: string,
+      cell: string|null,
       row: TableRow,
       headers: string[],
       fieldNo: number
@@ -1114,7 +1114,7 @@ function organizedFormatter(
      */
     callback = (
       label: string,
-      cell: string,
+      cell: string|null,
       row: TableRow,
       headers: string[],
       fieldNo: number
@@ -1124,7 +1124,7 @@ function organizedFormatter(
       }
       if (fieldNo == 0) {
         // automatically added Visit column
-        return <TableCell data={cell} />;
+        return <TableCell data={cell||''} />;
       }
 
       const fieldobj = fields[fieldNo-1];
