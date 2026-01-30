@@ -113,4 +113,16 @@ class DICOMArchiveRowWithSession implements \LORIS\Data\DataInstance,
     {
         return $this->CreatedBy;
     }
+
+    /**
+     * Implements the AccessibleResource interface
+     *
+     * @param \User $user The User whose access is being checked
+     *
+     * @return bool
+     */
+    public function isAccessibleBy(\User $user): bool
+    {
+           return true;
+    }
 }

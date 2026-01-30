@@ -97,4 +97,16 @@ class ResolvedDTO implements DataInstance, SiteHaver
     {
         return \ProjectID::singleton($this->projectid);
     }
+
+    /**
+     * Implements the AccessibleResource interface
+     *
+     * @param \User $user The User whose access is being checked
+     *
+     * @return bool
+     */
+    public function isAccessibleBy(\User $user): bool
+    {
+           return true;
+    }
 }

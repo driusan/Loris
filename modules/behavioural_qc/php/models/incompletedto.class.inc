@@ -156,4 +156,16 @@ class IncompleteDTO implements \LORIS\Data\DataInstance,
             'commentID'       => $this->_commentID,
         ];
     }
+
+    /**
+     * Implements the AccessibleResource interface
+     *
+     * @param \User $user The User whose access is being checked
+     *
+     * @return bool
+     */
+    public function isAccessibleBy(\User $user): bool
+    {
+           return true;
+    }
 }

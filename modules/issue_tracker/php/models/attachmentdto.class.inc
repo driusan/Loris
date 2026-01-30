@@ -59,4 +59,16 @@ class AttachmentDTO implements \LORIS\Data\DataInstance
             'mime_type'   => $this->mime_type,
         ];
     }
+
+    /**
+     * Implements the AccessibleResource interface
+     *
+     * @param \User $user The User whose access is being checked
+     *
+     * @return bool
+     */
+    public function isAccessibleBy(\User $user): bool
+    {
+           return true;
+    }
 }

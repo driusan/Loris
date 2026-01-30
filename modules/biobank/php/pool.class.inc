@@ -497,5 +497,17 @@ class Pool implements
     {
         return json_encode($this);
     }
+
+    /**
+     * Implements the AccessibleResource interface
+     *
+     * @param \User $user The User whose access is being checked
+     *
+     * @return bool
+     */
+    public function isAccessibleBy(\User $user): bool
+    {
+           return true;
+    }
 }
 

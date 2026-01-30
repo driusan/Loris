@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
+
 /**
  * This file defines the Instance interface.
  *
@@ -13,6 +14,7 @@
  * @link       https://www.github.com/aces/Loris/
  */
 namespace LORIS\Data;
+use LORIS\StudyEntities\AccessibleResource;
 
 /**
  * A DataInstance represents a single record returned from a Provisioner.
@@ -27,6 +29,6 @@ namespace LORIS\Data;
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
  * @link       https://www.github.com/aces/Loris/
  */
-interface DataInstance extends \JsonSerializable
+interface DataInstance extends \JsonSerializable, AccessibleResource
 {
 }
