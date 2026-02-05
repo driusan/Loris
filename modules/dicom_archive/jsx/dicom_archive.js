@@ -77,8 +77,7 @@ class DicomArchive extends Component {
     let result = <td>{cell}</td>;
     switch (column) {
     case t('Archive Location', {ns: 'dicom_archive'}): {
-      const downloadURL = '/mri/jiv/get_file.php?file=' + cell
-            + '&patientName=' + row[t('Patient Name', {ns: 'dicom_archive'})];
+      const downloadURL = 'dicom_archive/tarchive/' + row[t('TarchiveID', {ns: 'dicom_archive'})] + '/download';
       result =
           <td>
             <a href={downloadURL}>
@@ -91,8 +90,7 @@ class DicomArchive extends Component {
     }
     case t('Metadata', {ns: 'dicom_archive'}): {
       const metaURL = loris.BaseURL
-          + '/dicom_archive/viewDetails/?tarchiveID='
-          + row[t('TarchiveID', {ns: 'dicom_archive'})];
+          + '/dicom_archive/tarchive/' + row[t('TarchiveID', {ns: 'dicom_archive'})];
       result=<td><a href={metaURL}>{t(cell, {ns: 'dicom_archive'})}</a></td>;
       break;
     }

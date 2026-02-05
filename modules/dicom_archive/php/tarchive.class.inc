@@ -13,6 +13,8 @@
  * @link       https://www.github.com/aces/Loris-Trunk/
  */
 namespace LORIS\dicom_archive;
+use \Psr\Http\Message\ServerRequestInterface;
+use \Psr\Http\Message\ResponseInterface;
 
 /**
  * Implements the ViewDetails subpage of the dicom_archive module.
@@ -24,7 +26,7 @@ namespace LORIS\dicom_archive;
  * @license    http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
  * @link       https://www.github.com/aces/Loris-Trunk/
  */
-class ViewDetails extends \NDB_Form
+class Tarchive extends \NDB_Form
 {
     /**
      * ID of the tarchive for which the details should be displayed.
@@ -63,7 +65,7 @@ class ViewDetails extends \NDB_Form
             FROM tarchive t 
                 JOIN session s ON s.ID = t.SessionID 
             WHERE TarchiveID = :ID",
-            ['ID' => $_REQUEST['tarchiveID']]
+            ['ID' => $this->tarchiveID],
         );
 
         $hasCenterAccess    = false;
@@ -117,11 +119,55 @@ class ViewDetails extends \NDB_Form
      */
     function setup()
     {
-        $this->DB = $this->loris->getDatabaseConnection();
 
         $user = \User::singleton();
-        if ((!empty($_REQUEST['tarchiveID'])) && ($this->_hasAccess($user))) {
-            $this->tarchiveID          = intval($_REQUEST['tarchiveID']);
+        if ((!empty($this->tarchiveID)) && ($this->_hasAccess($user))) {
+
+            $this->_validateNamesIDs();
+        }
+    }
+
+    /**
+     * Handle a PSR7 Request for the dicom_archive endpoint. Also calls a
+     * validation function to ensure necessary configuration settings exist.
+     *
+     * @param ServerRequestInterface $request The PSR15 Request being handled
+     *
+     * @return ResponseInterface The PSR15 response for the page.
+     */
+    public function handle(ServerRequestInterface $request) : ResponseInterface
+    {
+	    $unhandled = $request->getAttribute("unhandledURI");
+	    $pieces = explode('/', trim($unhandled->getPath(), "/"));
+	    if($pieces[0] !== 'tarchive' || count($pieces) < 2) {
+		    throw new \Exception("Invalid LORIS state");
+	    }
+	    if(count($pieces) == 3 && $pieces[2] == 'download') {
+		    try {
+			    $config   = \NDB_Config::singleton();
+			    $tarchivePath = $config->getSetting('tarchiveLibraryDir');
+			    $downloader = new \LORIS\FilesDownloadHandler(
+				    new \SplFileInfo($tarchivePath)
+			    );
+			    $request = $request->withAttribute("filename", $this->tpl_data['archive']['ArchiveLocation']);
+			    return $downloader = $downloader->handle($request)
+				    ->withHeader("Content-Type", "application/x-tar");
+		    } catch(\LorisException $e) {
+			    return new \LORIS\Http\Response\JSON\InternalServerError($e->getMessage());
+		    }
+	    }
+	    return parent::handle($request);
+    }
+
+    public function loadResources(\User $user, ServerRequestInterface $request) : void {
+	    $unhandled = $request->getAttribute("unhandledURI");
+	    $pieces = explode('/', trim($unhandled->getPath(), "/"));
+	    if($pieces[0] !== 'tarchive' || count($pieces) < 2) {
+		    throw new \Exception("Invalid LORIS state");
+	    }
+	    $this->tarchiveID = $pieces[1];
+
+	    $this->DB = $this->loris->getDatabaseConnection();
             $this->tpl_data['archive'] = $this->_getTarchiveData(
                 $this->tarchiveID,
                 'tarchive',
@@ -137,11 +183,7 @@ class ViewDetails extends \NDB_Form
                 'tarchive_files',
                 'TarchiveFileID'
             );
-
-            $this->_validateNamesIDs();
-        }
     }
-
     /**
      * Retrieves data for the template from the database
      *
