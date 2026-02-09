@@ -68,6 +68,7 @@ class Media extends \DataFrameworkMenu
     {
         $user = \User::singleton();
         $db   = $this->loris->getDatabaseConnection();
+	$config = $this->loris->getConfiguration();
 
         $siteList  = [];
         $visitList = \Utility::getVisitList();
@@ -133,6 +134,8 @@ class Media extends \DataFrameworkMenu
             'instruments'   => $instrumentList,
             'languages'     => $languageList,
             'hidden'        => $hiddenOptions,
+	    'startYear' => $config->getSetting('startYear'),
+	    'endYear' => $config->getSetting('endYear'),
             'maxUploadSize' => \Utility::getMaxUploadSize(),
         ];
     }

@@ -333,7 +333,7 @@ function getUploadFields()
             )
         ) {
             $testname       = $record["Test_name"];
-            $instrumentName = $allInstruments[$testname] ?: $testname;
+            $instrumentName = isset($allInstruments[$testname])  ? $allInstruments[$testname]: $testname;
 
             $sessionData[$pscid]['instruments'][$visit][$testname]
                 = $instrumentName;

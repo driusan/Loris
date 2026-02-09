@@ -220,6 +220,9 @@ dataquery: $(filter modules/dataquery/%,$(MOFILES)) $(filter modules/dataquery/%
 login: $(filter modules/login/%,$(MOFILES)) $(filter modules/login/%,$(I18NJSONFILES))
 	target=login npm run compile
 
+media: $(filter modules/login/%,$(MOFILES)) $(filter modules/login/%,$(I18NJSONFILES))
+	target=media npm run compile
+
 module_manager: $(filter modules/module_manager/%,$(MOFILES)) $(filter modules/module_manager/%,$(I18NJSONFILES))
 	target=module_manager npm run compile
 

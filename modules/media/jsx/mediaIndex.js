@@ -10,7 +10,7 @@ import Loader from 'Loader';
 import FilterableDataTable from 'FilterableDataTable';
 import TriggerableModal from 'TriggerableModal';
 
-import MediaUploadForm from './uploadForm';
+import {MediaUploadForm} from './uploadForm';
 import MediaEditForm from './editForm';
 
 import hiStrings from '../locale/hi/LC_MESSAGES/media.json';
@@ -264,11 +264,11 @@ class MediaIndex extends Component {
         return (
           <TabPane TabId={tabs[1].id}>
             <MediaUploadForm
-              DataURL={loris.BaseURL
-                      + '/media/ajax/FileUpload.php?action=getData'}
-              action={loris.BaseURL
-                     + '/media/ajax/FileUpload.php?action=upload'}
+	      BaseURL={loris.BaseURL}
+	      startYear={options.startYear}
+	      endYear={options.endYear}
               maxUploadSize={options.maxUploadSize}
+	      languages={options.languages}
               insertRow={this.insertRow}
             />
           </TabPane>

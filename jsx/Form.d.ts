@@ -17,6 +17,7 @@ type formElementProps = {
     children: ReactNode
     fileUpload?: boolean = false
 };
+
 /**
  * FormElement class. See Form.js
  */
@@ -633,6 +634,84 @@ export class RadioElement {
     forceUpdate(): void
 }
 
+type staticElementProps = {
+    text: any
+    name?: string
+    label?: string
+};
+/**
+ * StaticElement class. See Form.js
+ */
+export class StaticElement {
+    props: staticElementProps
+    state: any
+    context: object
+    refs: {[key: string]: ReactInstance}
+
+
+    /**
+     * Construct a StaticElement
+     *
+     * @param {radioElementProps} props - React props
+     */
+    constructor(props: radioElementProps)
+
+    /**
+     * React lifecycle method
+     *
+     * @returns {ReactNode} - the element
+     */
+    render(): ReactNode
+
+    /**
+     * React lifecycle method
+     *
+     * @param {object} newstate - the state to override
+     */
+    setState(newstate: object): void
+
+    /**
+     * React lifecycle method.
+     */
+    forceUpdate(): void
+}
+
+/**
+ * HeaderElement class. See Form.js
+ */
+export class HeaderElement {
+    props: staticElementProps
+    state: any
+    context: object
+    refs: {[key: string]: ReactInstance}
+
+
+    /**
+     * Construct a HeaderElement
+     *
+     * @param {radioElementProps} props - React props
+     */
+    constructor(props: radioElementProps)
+
+    /**
+     * React lifecycle method
+     *
+     * @returns {ReactNode} - the element
+     */
+    render(): ReactNode
+
+    /**
+     * React lifecycle method
+     *
+     * @param {object} newstate - the state to override
+     */
+    setState(newstate: object): void
+
+    /**
+     * React lifecycle method.
+     */
+    forceUpdate(): void
+}
 
 export default {
   FormElement,
