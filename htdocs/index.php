@@ -105,16 +105,18 @@ $serverrequest = $serverrequest->withUri($uri->withQuery($query));
 
 // Now that we've created the ServerRequest, handle it.
 $factory = \NDB_Factory::singleton();
-$user    = $factory->user();
 
+$config = $factory->config();
 $lorisInstance = new \LORIS\LorisInstance(
-    $factory->database(),
-    $factory->config(),
+    $config->getDatabase(),
+    $config,
     [
         __DIR__ . "/../project/modules",
         __DIR__ . "/../modules/"
     ]
 );
+
+$user    = $factory->user($lorisInstance);
 $entrypoint    = new \LORIS\Router\BaseRouter(
     $lorisInstance,
     $user,

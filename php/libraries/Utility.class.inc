@@ -154,11 +154,11 @@ class Utility
      * @return array an associative array("center ID" => "site name")
      */
     static function getSiteList(
+	\LORIS\LorisInstance $loris,
         bool $study_site = true,
         bool $DCC = true
     ): array {
-        $factory = NDB_Factory::singleton();
-        $DB      = $factory->database();
+        $DB      = $loris->getDatabaseConnection();
 
         // get the list of study sites - to be replaced by the Site object
         $query         = "SELECT CenterID, Name FROM psc ";
@@ -284,10 +284,9 @@ class Utility
      * @return array an associative array("projectID" => "project title")
      * @access public
      */
-    static function getProjectList(): array
+    static function getProjectList(\LORIS\LorisInstance $loris): array
     {
-        $factory = \NDB_Factory::singleton();
-        $DB      = $factory->database();
+        $DB      = $loris->getDatabaseConnection();
         // get the list of projects
         $projects = $DB->pselectColWithIndexKey(
             "SELECT ProjectID, Name FROM Project",
@@ -890,10 +889,9 @@ class Utility
      *               array is of the form
      *               array($language_code => $language_label)
      */
-    static function getLanguageListByCode(): array
+    static function getLanguageListByCode(\LORIS\LorisInstance $loris): array
     {
-        $factory = \NDB_Factory::singleton();
-        $DB      = $factory->database();
+        $DB      = $loris->getDatabaseConnection();
 
         return array_column(
             iterator_to_array(

@@ -32,6 +32,7 @@
  */
 class NDB_Config
 {
+    protected ?\Database $db;
     /**
      * The raw array of settings
      *
@@ -61,6 +62,7 @@ class NDB_Config
         $config = self::$configInstance;
         if (is_null($config)) {
             $config = new NDB_Config();
+	    $config->db = null;
 
             if ($configFile === null) {
                 // Can't directly check !empty because of a bug
@@ -84,6 +86,15 @@ class NDB_Config
         return $config;
     }
 
+    public function setDatabase(\Database $db) {
+	    $this->db = $db;
+    }
+
+    public function getDatabase() : \Database {
+	    if($this->db === null)
+		    throw new \Exception("database not set");
+	    return $this->db;
+    }
     /**
      * Loads config file
      *
@@ -277,10 +288,7 @@ class NDB_Config
             return null;
         }
 
-        $factory = NDB_Factory::singleton();
-
-        $db = $factory->database();
-        if ($db->isConnected() !== true) {
+        if ($this->db->isConnected() !== true) {
             // no database connection, fall back on config.xml
             throw new DatabaseException(
                 "No connection to database while trying to get setting $name"
@@ -290,7 +298,7 @@ class NDB_Config
         // Get the config setting data, either by ID or by Name depending
         // on what was passed
         if ($id === null) {
-            $configSetting = $db->pselect(
+            $configSetting = $this->db->pselect(
                 "SELECT cs.ID as ParentID, child.ID as ChildID,
                         cs.AllowMultiple, child.Name
                 FROM ConfigSettings cs
@@ -305,7 +313,7 @@ class NDB_Config
                 );
             }
         } else {
-            $configSetting = $db->pselect(
+            $configSetting = $this->db->pselect(
                 "SELECT cs.ID as ParentID, child.ID as ChildID,
                         cs.AllowMultiple, child.Name
                 FROM ConfigSettings cs
@@ -324,7 +332,7 @@ class NDB_Config
             // Trying to get a single value from the database.
             $configSetting = $configSetting->getFirstRow();
             if ($configSetting['AllowMultiple'] == '0') {
-                $val = $db->pselectOne(
+                $val = $this->db->pselectOne(
                     "SELECT Value FROM Config WHERE ConfigID=:CID",
                     ['CID' => $configSetting['ParentID']]
                 );
@@ -335,7 +343,7 @@ class NDB_Config
             } else {
                 // Allows multiple, but has no child elements. Was called
                 // as ie. $config->getSetting("DoubleDataEntryInstruments")
-                $val = $db->pselect(
+                $val = $this->db->pselect(
                     "SELECT Value FROM Config WHERE ConfigID=:CID",
                     ['CID' => $configSetting['ParentID']]
                 );
@@ -459,11 +467,8 @@ class NDB_Config
             return $this->settingCache[$name][$langcode];
         }
 
-        $factory = NDB_Factory::singleton();
-
-        $db = $factory->database();
         // Verify that it's really a multilingual setting.
-        $configSetting = $db->pselect(
+        $configSetting = $this->db->pselect(
             "SELECT ID, AllowMultiple
 	     FROM ConfigSettings cs
              WHERE cs.Name=:nm AND Multilingual=true",
@@ -477,7 +482,7 @@ class NDB_Config
             );
         }
 
-        $localizedVal = $db->pselectOne(
+        $localizedVal = $this->db->pselectOne(
             "SELECT Value FROM ConfigI18n i18n
                    JOIN language l ON (l.language_id=i18n.LanguageID)
             WHERE l.language_code=:lc AND i18n.ConfigID=:cid",
@@ -590,10 +595,7 @@ class NDB_Config
      */
     function getExternalLinks(string $type): array
     {
-        $factory = NDB_Factory::singleton();
-        $db      = $factory->database();
-
-        $results = $db->pselect(
+        $results = $this->db->pselect(
             "SELECT LinkText, LinkURL
                 FROM ExternalLinks l JOIN ExternalLinkTypes lt
                     ON (l.LinkTypeID=lt.LinkTypeID)

@@ -37,6 +37,8 @@ class UserPermissions
      */
     private $permissions = [];
 
+    public function __construct(protected \LORIS\LorisInstance $loris) {
+    }
     /**
      * Constructor
      *
@@ -52,7 +54,7 @@ class UserPermissions
         $query  = "SELECT ID FROM users WHERE UserID =:UName";
         $params = ['UName' => $username];
 
-        $userID = \NDB_Factory::singleton()->database()->pselectOne($query, $params);
+        $userID = $this->loris->getDatabaseConnection()->pselectOne($query, $params);
         if ($userID === null) {
             return false;
         }
@@ -73,7 +75,7 @@ class UserPermissions
     function setPermissions(): void
     {
         // create DB object
-        $DB = \NDB_Factory::singleton()->database();
+        $DB = $this->loris->getDatabaseConnection();
 
         // get all the permissions for this user
         $query = "SELECT p.code, pr.userID FROM permissions p

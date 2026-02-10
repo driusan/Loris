@@ -51,16 +51,16 @@ class User extends UserPermissions implements
      * @return \User A User object if the User specified by $username exists
      * @access public
      */
-    public static function &factory(?string $username = null): \User
+    public static function &factory(\LORIS\LorisInstance $loris, ?string $username = null): \User
     {
-        $obj = new User;
+        $obj = new User($loris);
 
         // right off, set the username
         $obj->userInfo['UserID'] = $username;
 
         // get the user's permissions
         if ($obj->select($username) === false) {
-            $obj = new \LORIS\AnonymousUser();
+            $obj = new \LORIS\AnonymousUser($loris);
             return $obj;
         };
 
@@ -187,7 +187,7 @@ class User extends UserPermissions implements
      * @access public
      * @static
      */
-    public static function &singleton(?string $username = null): \User
+    public static function &singleton(\LORIS\LorisInstance $loris, ?string $username = null): \User
     {
         static $currentuser = null;
         static $allusers    = [];
@@ -197,7 +197,7 @@ class User extends UserPermissions implements
         if ($username !== null && isset($allusers[$username])) {
             return $allusers[$username];
         }
-        $instance = User::factory($username);
+        $instance = User::factory($loris, $username);
         if ($currentuser === null) {
             $currentuser = $instance;
         }

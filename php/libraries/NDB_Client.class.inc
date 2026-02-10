@@ -53,7 +53,30 @@ class NDB_Client
         $factory = NDB_Factory::singleton();
 
         // Load config file into factory as a side-effect
-        $factory->config($configFile);
+        $config = $factory->config($configFile);
+
+	$settings = $factory->settings();
+
+        // Pass the credentials in environment variables, so that they
+        // don't potentially show up in a stack trace if something goes
+        // wrong.
+        $dbname = $settings->dbName();
+        putenv("LORIS_{$dbname}_USERNAME=" . $settings->dbUserName());
+        putenv("LORIS_{$dbname}_PASSWORD=" . $settings->dbPassword());
+        putenv("LORIS_{$dbname}_HOST=" . $settings->dbHost());
+
+        $db_ref = new Database();
+        $db_ref->connect(
+            $settings->dbName(),
+            true,
+        );
+
+        // Unset the variables now that they're no longer needed.
+        putenv("LORIS_{$dbname}_USERNAME=");
+        putenv("LORIS_{$dbname}_PASSWORD=");
+        putenv("LORIS_{$dbname}_HOST=");
+
+	$config->setDatabase($db_ref);
 
         // stop here if this is a command line client
         if (!$this->_isWebClient) {

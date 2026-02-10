@@ -122,13 +122,13 @@ class NDB_Factory
      *
      * @return User A user singleton
      */
-    function user(): \User
+    function user(\LORIS\LorisInstance $loris): \User
     {
         $user = self::$_user;
         if ($user !== null) {
             return $user;
         }
-        $user        = \User::singleton();
+        $user        = \User::singleton($loris);
         self::$_user = $user;
         return $user;
     }

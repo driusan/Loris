@@ -45,7 +45,7 @@ class AnonymousPageDecorationMiddleware implements MiddlewareInterface
                      'sandbox'         => ($this->Config->getSetting("sandbox") === '1'),
                      'partner_logos'   => $this->Config->getSetting('partner_logos'),
                      'language'        => $lang,
-                     'languages'       => \Utility::getLanguageListByCode(),
+                     'languages'       => \Utility::getLanguageListByCode($request->getAttribute("loris")),
                     );
 
         $tpl_data['css'] = 'main.css';
