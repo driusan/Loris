@@ -122,6 +122,8 @@ class CandidateListRowProvisioner extends \LORIS\Data\Provisioners\DBRowProvisio
                 throw new \Exception("Unhandled DoB format: $this->dobFormat");
             }
         }
+
+        $row['RegistrationSite'] = dgettext("psc", $row['RegistrationSite']);
         unset($row['RegistrationCenterID']);
         unset($row['RegistrationProjectID']);
         return new CandidateListRow($row, $cid, $pid);
