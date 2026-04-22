@@ -335,7 +335,7 @@ class User extends UserPermissions implements
         if ($projects === '') {
             return [];
         }
-        return explode(';', $projects);
+        return array_map(fn($name) => dgettext("Project", $name), explode(';', $projects));
     }
 
     /**

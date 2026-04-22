@@ -141,7 +141,9 @@ class Utility
 
         $result = $DB->pselectCol($query, []);
 
-        return array_combine($result, $result);
+	$translated = array_map(fn($val) => dgettext("sex", $val ?? ''), $result);
+
+        return array_combine($translated, $translated);
     }
 
     /**
@@ -323,7 +325,7 @@ class Utility
 
         $subprojs = [];
         foreach ($cohorts as $row) {
-            $subprojs[$row['CohortID']] = $row['title'];
+            $subprojs[$row['CohortID']] = dgettext('cohort', $row['title']);
         }
         return $subprojs;
     }
