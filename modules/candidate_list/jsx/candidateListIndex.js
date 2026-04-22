@@ -47,13 +47,13 @@ class CandidateListIndex extends Component {
     this.toggleFilters = this.toggleFilters.bind(this);
 
     this.dateFormatter = new Intl.DateTimeFormat(
-      loris.user.langpref.replace('_', '-'),
-      {
-        style: 'short',
-        timeZone: 'UTC',
+    loris.user.langpref.replace('_', '-'),
+    {
+      style: 'short',
+      timeZone: 'UTC',
 
-      }
-    );
+    }
+  );
   }
 
   /**
