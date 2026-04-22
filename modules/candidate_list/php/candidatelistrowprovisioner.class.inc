@@ -133,7 +133,11 @@ class CandidateListRowProvisioner extends \LORIS\Data\Provisioners\DBRowProvisio
 		$row['Cohort'] = implode(',', $translated);
 	}
 	$row['RegistrationProject'] = dgettext("Project", $row['RegistrationProject'] ?? '');
-	$row['Sex'] = dgettext("sex", $row['Sex'] ?? '');
+	$row['Sex'] = isset($row['Sex']) ? dgettext("sex", $row['Sex']) : '';
+
+	$row['EntityType'] = dgettext("candidate", $row['EntityType'] ?? '');
+
+	$row['ParticipantStatus'] = dgettext("participant_status_options", $row['ParticipantStatus']);
 
         unset($row['RegistrationCenterID']);
         unset($row['RegistrationProjectID']);
