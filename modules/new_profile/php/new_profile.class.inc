@@ -61,7 +61,7 @@ class New_Profile extends \NDB_Form
         // Get projects for the select dropdown
         $projList = [];
         foreach ($user->getProjects() as $project) {
-            $projList[$project->getName()] = $project->getName();
+            $projList[dgettext("project", $project->getName())] = dgettext("project", $project->getName());
         }
 
         // Get setting through pscid

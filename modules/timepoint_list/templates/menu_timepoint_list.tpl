@@ -35,7 +35,7 @@
       {$candidate.Sex}
     </td>
       <td>
-        {$candidate.ProjectTitle}
+        {dgettext("Project", $candidate.ProjectTitle)}
       </td>
     {foreach from=$candidate.DisplayParameters item=value key=name}
       <td>
@@ -84,13 +84,13 @@
         <tr>
             <td>
               <a href="{$baseurl|default}/instrument_list/?candID={$candID}&sessionID={$timePoints[timepoint].SessionID}">
-                  {$timePoints[timepoint].Visit_label}
+                  {dgettext("visit", $timePoints[timepoint].Visit_label)}
               </a>
             </td>
-            <td>{$timePoints[timepoint].CohortTitle}</td>
+            <td>{dgettext("cohort", $timePoints[timepoint].CohortTitle)}</td>
 
             <td>{$timePoints[timepoint].SiteAlias}</td>
-            <td>{$timePoints[timepoint].ProjectName}</td>
+            <td>{dgettext("Project", $timePoints[timepoint].ProjectName)}</td>
 
             {if $timePoints[timepoint].staticStage|default != "" || $timePoints[timepoint].Current_stage == "Not Started"}
             <td colspan="3">{dgettext("loris", $timePoints[timepoint].Current_stage)}</td>
