@@ -292,7 +292,7 @@ abstract class LorisIntegrationTest extends TestCase
                     WHERE code=:perm"
         );
         foreach ($permissions as $value) {
-            $this->DB->execute(
+            (void )$this->DB->execute(
                 $prepare,
                 ["perm" => $value],
                 ['nofetch' => "true"]

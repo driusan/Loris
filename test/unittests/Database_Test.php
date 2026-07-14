@@ -963,7 +963,8 @@ class Database_Test extends TestCase
         '@phan-var \Database $stub';
         '@phan-var \PDO $PDO';
         $stub->_PDO = $PDO;
-        $stub->prepare("SHOW TABLES");
+        // only called to trigger the expects for the unit test
+        (void )$stub->prepare("SHOW TABLES");
     }
 
     /**
@@ -1118,7 +1119,8 @@ class Database_Test extends TestCase
             );
 
         '@phan-var \Database $stub';
-        $stub->pselectRow(
+        // only called to trigger the unit test expects
+        (void )$stub->pselectRow(
             $query,
             $params
         );

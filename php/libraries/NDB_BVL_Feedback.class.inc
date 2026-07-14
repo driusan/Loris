@@ -1011,7 +1011,7 @@ class NDB_BVL_Feedback
             SET Status = \'closed\', UserID = \'' . $this->_username . '\'
             WHERE ' . $whereStr
         );
-        $db->execute($stmt, $params, ['nofetch' => 'true']);
+        (void )$db->execute($stmt, $params, ['nofetch' => 'true']);
         return $stmt->rowCount();
     }
 
@@ -1040,7 +1040,7 @@ class NDB_BVL_Feedback
             SET Status = \'opened\', UserID = \'' . $this->_username . '\'
             WHERE ' . $whereStr
         );
-        $db->execute($stmt, $params, ['nofetch' => 'true']);
+        (void )$db->execute($stmt, $params, ['nofetch' => 'true']);
         return $stmt->rowCount();
 
     }

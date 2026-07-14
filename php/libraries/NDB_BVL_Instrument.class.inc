@@ -2776,7 +2776,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             "DELETE FROM conflicts_unresolved
              WHERE (CommentId1=:CID OR CommentId2=:CID)"
         );
-        $db->execute(
+        (void )$db->execute(
             $prepQ,
             ['CID' => $this->commentID],
             ['nofetch' => "true"]
