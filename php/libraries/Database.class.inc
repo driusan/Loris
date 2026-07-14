@@ -203,6 +203,7 @@ class Database implements LoggerAwareInterface
      *
      * @return bool
      */
+    #[\NoDiscard]
     public function isConnected(): bool
     {
         try {
@@ -445,6 +446,7 @@ class Database implements LoggerAwareInterface
      *
      * @return string ID of the last inserted row
      */
+    #[\NoDiscard]
     public function getLastInsertId(): string
     {
         return $this->lastInsertID;
@@ -680,6 +682,7 @@ class Database implements LoggerAwareInterface
      *
      * @return PDOStatement A PDO prepared statement representing $query
      */
+    #[\NoDiscard]
     function prepare(string $query): PDOStatement
     {
         return $this->_PDO->prepare($query);
@@ -702,6 +705,7 @@ class Database implements LoggerAwareInterface
      *                                  ColName => Value after
      *                                      executing the statement.
      */
+    #[\NoDiscard]
     function execute(
         PDOStatement $prepared,
         array $params,
@@ -751,6 +755,7 @@ class Database implements LoggerAwareInterface
      *
      * @return \LORIS\Database\Query
      */
+    #[\NoDiscard]
     function pselect(string $query, array $params): \LORIS\Database\Query
     {
         return new \LORIS\Database\Query($this->_PDO, $query, $params);
@@ -780,6 +785,7 @@ class Database implements LoggerAwareInterface
      *                  nested array is an associative array representing the row in
      *                  the format ColumnName => Value
      */
+    #[\NoDiscard]
     function pselectWithIndexKey(
         string $query,
         array $params,
@@ -847,6 +853,7 @@ class Database implements LoggerAwareInterface
      *
      * @throws \DomainException When the query returns multiple rows.
      */
+    #[\NoDiscard]
     function pselectRow(string $query, array $params): ?array
     {
         $query = $this->pselect($query . " LIMIT 2", $params);
@@ -876,6 +883,7 @@ class Database implements LoggerAwareInterface
      * @return array<string,string> Format: rowID=>value containing
      *               all values for the only column of the select statement
      */
+    #[\NoDiscard]
     function pselectCol(string $query, array $params): array
     {
         $unprocessed = $this->pselect($query, $params);
@@ -917,6 +925,7 @@ class Database implements LoggerAwareInterface
      * @return array<string, string> Format: uniqueKey=>value containing all
      *               values for the non-unique key element of the select statement
      */
+    #[\NoDiscard]
     function pselectColWithIndexKey(
         string $query,
         array $params,
@@ -991,6 +1000,7 @@ class Database implements LoggerAwareInterface
      *
      * @return ?string A single cell from the database.
      */
+    #[\NoDiscard]
     function pselectOne(string $query, array $params): ?string
     {
         $result = $this->pselectRow($query, $params);
@@ -1019,6 +1029,7 @@ class Database implements LoggerAwareInterface
      * @throws \DomainException When the cell returned by the query cannot be
      *                          validated as an integer.
      */
+    #[\NoDiscard]
     function pselectOneInt(string $query, array $params): ?int
     {
         $result = filter_var(
@@ -1044,6 +1055,7 @@ class Database implements LoggerAwareInterface
      *
      * @return string
      */
+    #[\NoDiscard]
     function _implodeWithKeys(
         string $glue,
         array $dataArray,
@@ -1086,6 +1098,7 @@ class Database implements LoggerAwareInterface
      *                with appropriate variable names generated for data
      *                binding.
      */
+    #[\NoDiscard]
     private function _implodeAsPrepared(
         string $glue,
         array $dataArray,
@@ -1120,6 +1133,7 @@ class Database implements LoggerAwareInterface
      *
      * @return string The value appropriately quoted/escaped
      */
+    #[\NoDiscard]
     function quote(string $value): string
     {
         return $this->_PDO->quote($value);
@@ -1335,6 +1349,7 @@ class Database implements LoggerAwareInterface
      *
      * @return bool true if the table exists
      */
+    #[\NoDiscard]
     function tableExists(string $test_name): bool
     {
         $config   =& NDB_Config::singleton();
@@ -1366,6 +1381,7 @@ class Database implements LoggerAwareInterface
      *
      * @return bool true if the table has a the given column
      */
+    #[\NoDiscard]
     function columnExists(string $test_name, string $column): bool
     {
         $config   =& NDB_Config::singleton();
@@ -1397,6 +1413,7 @@ class Database implements LoggerAwareInterface
      *
      * @return string surrounded by backticks and with special characters escaped.
      */
+    #[\NoDiscard]
     function escape(string $tableName): string
     {
         //with help from
@@ -1438,6 +1455,7 @@ class Database implements LoggerAwareInterface
      * @return bool `true`, if in transaction
      * @throws DatabaseException
      */
+    #[\NoDiscard]
     public function inTransaction(): bool
     {
         return $this->_PDO->inTransaction();
