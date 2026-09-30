@@ -37,6 +37,7 @@ class ExceptionHandlingMiddleware implements MiddlewareInterface, LoggerAwareInt
     ) : ResponseInterface {
         // Catch PHP Fatal errors that aren't exceptions such as type errors
         // or out of memory errors
+            return $handler->handle($request);
         register_shutdown_function(
             function () {
                 $error = error_get_last();
@@ -52,7 +53,6 @@ class ExceptionHandlingMiddleware implements MiddlewareInterface, LoggerAwareInt
         );
 
         try {
-            return $handler->handle($request);
             /* The order of these catch statements matter and should go from
              * most to least specific. Otherwise all Exceptions will be caught
              * as their more generic parent class which reduces precision.

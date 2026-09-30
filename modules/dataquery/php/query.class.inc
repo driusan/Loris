@@ -623,7 +623,7 @@ class Query implements \LORIS\StudyEntities\AccessibleResource,
                     }
                 }
                 $canddata  = new \CandidateData(
-                    candID: new CandID(strval($row['CandID'])),
+                    candID: new CandID($row['CandID']),
                     registrationProjectID: $row['RegistrationProjectID'] !== null
                     ? \ProjectID::singleton($row['RegistrationProjectID'])
                     : null,
@@ -661,20 +661,17 @@ class Query implements \LORIS\StudyEntities\AccessibleResource,
      *
      * @return CandID[]
      */
-    private function _allCandidates() : array
+    private function _allCandidates() : iterable
     {
         $db      = $this->loris->getDatabaseConnection();
-        $results = $db->pselectCol(
+        $results = $db->pselect(
             "SELECT CandID FROM candidate WHERE Active='Y' ORDER BY CandID ",
             [],
         );
 
-        return array_map(
-            function ($row) {
-                return new CandID(strval($row));
-            },
-            $results
-        );
+	foreach($results as $row) {
+		yield new CandID($row['CandID']);
+	}
     }
 
     /**

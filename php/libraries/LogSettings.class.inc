@@ -13,7 +13,7 @@ class LogSettings
     private const DEFAULT_DATABASE_LOG_LEVEL  = "warning";
     private const DEFAULT_REQUEST_LOG_LEVEL   = "warning";
     private const DEFAULT_EXCEPTION_LOG_LEVEL = "warning";
-    private const DEFAULT_PROFILER_LOG_LEVEL  = "none";
+    private const DEFAULT_PROFILER_LOG_LEVEL  = "debug";
 
     /**
      * Construct a LogSettings object.

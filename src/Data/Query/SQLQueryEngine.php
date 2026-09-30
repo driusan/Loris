@@ -127,9 +127,9 @@ abstract class SQLQueryEngine implements QueryEngine
         $query .= ' ORDER BY c.CandID';
 
         $DB   = $this->loris->getDatabaseConnection();
-        $rows = $DB->pselectCol($query, $prepbindings);
+        $rows = $DB->pselectRow($query, $prepbindings);
         foreach ($rows as $candID) {
-            yield new CandID(strval($candID));
+            yield new CandID($candID['CandID']);
         }
     }
 

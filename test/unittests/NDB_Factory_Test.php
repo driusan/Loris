@@ -267,7 +267,7 @@ class NDB_Factory_Test extends TestCase
 
         $this->_factory->setDatabase($mockdb);
 
-        $candID = new CandID("300001");
+        $candID = new CandID(300001);
         $this->assertEquals(
             Candidate::singleton($candID),
             $this->_factory->candidate($candID)

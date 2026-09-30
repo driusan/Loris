@@ -189,7 +189,7 @@ class TimePoint implements \LORIS\StudyEntities\AccessibleResource,
             $this->_timePointInfo['CohortTitle'] = $title;
 
             $this->_timePointInfo['CandID']
-                = new CandID(strval($row['CandID']));
+                = new CandID($row['CandID']);
 
             $this->_timePointInfo['scanDone']
                 = $this->isScanDone() ? 'Y' : 'N';

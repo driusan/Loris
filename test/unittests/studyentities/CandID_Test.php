@@ -38,7 +38,7 @@ class CandID_Test extends TestCase
      */
     public function testGetType(): void
     {
-        $candid = new CandID("123456");
+        $candid = new CandID(123456);
         $this->assertEquals('CandID', $candid->getType());
     }
 
@@ -49,7 +49,7 @@ class CandID_Test extends TestCase
      */
     public function testToString(): void
     {
-        $candid = new CandID("123456");
+        $candid = new CandID(123456);
         $this->assertEquals('123456', (string)$candid);
     }
 }

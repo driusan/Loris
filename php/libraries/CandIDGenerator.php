@@ -58,9 +58,7 @@ class CandIDGenerator extends IdentifierGenerator
         do {
             $this->checkIDRangeFull();
             $id = new CandID(
-                strval(
-                    random_int(intval($this->minValue), intval($this->maxValue))
-                )
+                    random_int(CandID::MIN_VALUE, CandID::MAX_VALUE)
             );
             // Check if the ID is in use. If so, the loop will continue and a new
             // ID will be generated.

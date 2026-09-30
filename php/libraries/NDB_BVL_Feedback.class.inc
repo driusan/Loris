@@ -482,9 +482,9 @@ class NDB_BVL_Feedback
         $query .= " AND Public = 'Y' AND Status <> 'closed'";
         if (!empty($this->_feedbackObjectInfo['CandID'])) {
             $query            .= " AND c.CandID = :CaID";
-            $qparams['CaID']   = $this->_feedbackObjectInfo['CandID'];
+            $qparams['CaID']   = (string )$this->_feedbackObjectInfo['CandID'];
             $candidate         = Candidate::singleton(
-                new CandID(strval($qparams['CaID']))
+                new CandID(intval($qparams['CaID']))
             );
             $hasReadPermission = (
                 $hasReadPermission ||
@@ -593,9 +593,9 @@ class NDB_BVL_Feedback
             $where[]           = "c.CandID = :CaID";
             $where[]           = "ft.SessionID IS NULL";
             $where[]           = "ft.CommentID IS NULL";
-            $qparams['CaID']   = $this->_feedbackObjectInfo['CandID'];
+            $qparams['CaID']   = (string )$this->_feedbackObjectInfo['CandID'];
             $candidate         = Candidate::singleton(
-                new CandID(strval($qparams['CaID']))
+                new CandID(intval($qparams['CaID']))
             );
             $hasReadPermission = (
                 $hasReadPermission ||

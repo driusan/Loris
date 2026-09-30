@@ -16,7 +16,7 @@
 use \LORIS\StudyEntities\Candidate\CandID;
 
 $user      = \NDB_Factory::singleton()->user();
-$candID    = new CandID($_GET['candID']);
+$candID    = new CandID(intval($_GET['candID']));
 $candidate = \Candidate::singleton($candID);
 
 if (!$user->hasPermission('access_all_profiles')
@@ -76,7 +76,7 @@ default:
  */
 function getCandInfoFields()
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
 
     $db = \NDB_Factory::singleton()->database();
 
@@ -158,7 +158,7 @@ function getCandInfoFields()
  */
 function getProbandInfoFields()
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
 
     $db = \NDB_Factory::singleton()->database();
 
@@ -241,7 +241,7 @@ function getProbandInfoFields()
  */
 function getFamilyInfoFields()
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
 
     $db = \NDB_Factory::singleton()->database();
 
@@ -282,7 +282,7 @@ function getFamilyInfoFields()
     // Remove own ID and sibling IDs from list of possible family members
     foreach ($candidatesList as $key => $candidate) {
         foreach ($candidate as $ID) {
-            if (new CandID(strval($ID)) === $candID
+            if (new CandID($ID) === $candID
                 || in_array($ID, $siblings, true)
             ) {
                 unset($candidatesList[$key]);
@@ -328,7 +328,7 @@ function getParticipantStatusFields()
     global $loris;
 
     $loris->getModule('candidate_parameters')->registerAutoloader();
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
 
     $db = \NDB_Factory::singleton()->database();
 
@@ -447,7 +447,7 @@ function getParticipantStatusHistory(CandID $candID)
  */
 function getConsentStatusFields()
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
 
     $candidate = \Candidate::singleton($candID);
 
@@ -546,7 +546,7 @@ function getConsentStatusHistory($pscid)
  */
 function getDOBFields(): array
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
     $db     = \NDB_Factory::singleton()->database();
     // Get PSCID
     $candidateData = $db->pselectRow(
@@ -581,7 +581,7 @@ function getDOBFields(): array
  */
 function getDODFields(): array
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
     $db     = \NDB_Factory::singleton()->database();
 
     $candidateData = $db->pselectRow(
@@ -637,7 +637,7 @@ function getDODFields(): array
  */
 function getDiagnosisEvolutionFields(): array
 {
-    $candID = new CandID($_GET['candID']);
+    $candID = new CandID(intval($_GET['candID']));
     $db     = \NDB_Factory::singleton()->database();
 
     $pscid = $db->pselectOne(

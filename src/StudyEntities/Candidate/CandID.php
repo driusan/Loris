@@ -23,7 +23,7 @@ namespace LORIS\StudyEntities\Candidate;
  * @license  http://www.gnu.org/licenses/gpl-3.0.txt GPLv3
  * @link     https://www.github.com/aces/Loris/
  */
-class CandID extends ValidatableIdentifier implements \JsonSerializable
+class CandID extends \NumericIdentifier implements \JsonSerializable
 {
     /*
      * The minimum allowed value for valid CandIDs. Origin unclear but
@@ -32,14 +32,14 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
      *
      * @var int
      */
-    protected const MIN_VALUE = 100000;
+    public const MIN_VALUE = 100000;
 
     /*
-     * A valid CandID must have exactly this number of characters.
+     * A valid CandID must be smaller than this to fit into the database
      *
      * @var int
      */
-    protected const LENGTH_RANGE = '6,10';
+    public const MAX_VALUE = 9999999999;
 
     /**
      * Returns this identifier type
@@ -59,16 +59,13 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
      * This function is called by the contructor of ValidatableIdentifier
      * to ensure that no CandID exists if its value is not valid.
      *
-     * @param string $value The value to be validated
+     * @param int $value The value to be validated
      *
      * @return bool True if the value format is valid
      */
-    protected function validate(string $value): bool
+    static public function validate(int $value): bool
     {
-        $pattern = sprintf("/^[0-9]{%s}$/", self::LENGTH_RANGE);
-
-        return preg_match($pattern, $value) === 1 &&
-            intval($value) >= self::MIN_VALUE;
+        return $value >= self::MIN_VALUE && $value <= self::MAX_VALUE;
     }
 
     /**
@@ -78,7 +75,7 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
      */
     public function __toString(): string
     {
-        return $this->value;
+        return strval($this->value);
     }
 
     /**
@@ -87,9 +84,9 @@ class CandID extends ValidatableIdentifier implements \JsonSerializable
      * any type other than a resource.
      *
      * @see https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return string
+     * @return int 
      */
-    public function jsonSerialize() : string
+    public function jsonSerialize() : int
     {
         return $this->value;
     }

@@ -59,7 +59,7 @@ class Run extends \LORIS\Http\Endpoint
     public function queryResults(\User $user) : ResponseInterface
     {
         $db      = $this->loris->getDatabaseConnection();
-        $candIDs = $db->pselectCol(
+        $candIDs = $db->pselectRow(
             "SELECT c.CandID
                 FROM dataquery_run_results drr
                 JOIN candidate c on c.ID=drr.CandidateID
@@ -72,8 +72,8 @@ class Run extends \LORIS\Http\Endpoint
             \Candidate::filterInaccessibleCandIDs(
                 $this->loris,
                 array_map(
-                    function ($candID) {
-                        return new CandID(strval($candID));
+                    function ($row) {
+                        return new CandID($row['CandID']);
                     },
                     $candIDs
                 ),
@@ -115,7 +115,7 @@ class Run extends \LORIS\Http\Endpoint
     private function _jsondecoded(iterable $results, array $CandIDs)
     {
         foreach ($results as $row ) {
-            if (in_array(new CandID(strval($row['CandID'])), $CandIDs)) {
+            if (in_array(new CandID($row['CandID']), $CandIDs)) {
                 yield json_decode($row['RowData']);
             }
         }

@@ -2415,7 +2415,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             foreach ($jsondata as $row) {
                     $newinst = clone $this;
 
-                    $newinst->candID     = new CandID(strval($row['CandID']));
+                    $newinst->candID     = new CandID($row['CandID']);
                     $newinst->commentID  = $row['CommentID'];
                     $newinst->visitLabel = $row['VisitLabel'];
                     $newinst->sessionID  = new SessionID(
@@ -2507,7 +2507,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
             foreach ($data as $row) {
                     $newinst = clone $this;
 
-                $newinst->candID         = new CandID(strval($row['CandID']));
+                $newinst->candID         = new CandID($row['CandID']);
                     $newinst->commentID  = $row['CommentID'];
                     $newinst->visitLabel = $row['VisitLabel'];
                     $newinst->sessionID  = new SessionID(strval($row['SessionID']));
@@ -2774,7 +2774,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
         $db        = $this->loris->getDatabaseConnection();
         $CommentID = $this->getCommentID();
 
-        $candIDVal = $db->pselectOne(
+        $candIDVal = $db->pselectOneInt(
             "SELECT c.CandID FROM flag f
             JOIN session s ON (f.SessionID=s.ID)
             JOIN candidate c ON c.ID=s.CandidateID
@@ -2784,7 +2784,7 @@ abstract class NDB_BVL_Instrument extends NDB_Page
         if ($candIDVal === null) {
             return null;
         }
-        $this->candID = new CandID(strval($candIDVal));
+        $this->candID = new CandID($candIDVal);
         return $this->candID;
     }
 

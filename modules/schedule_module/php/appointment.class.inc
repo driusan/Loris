@@ -139,11 +139,11 @@ class Appointment extends \NDB_Page
      * ex. .../pscid/mtl001 will return dccid 300001 and session id
      *
      * @param string $type the tpye  (dccid or pscid)
-     * @param string $id   the id   id of dccid or pscid
+     * @param int    $id   the id   id of dccid or pscid
      *
      * @return array all the meta form
      */
-    public function getMetaForm(string $type,string $id): array
+    public function getMetaForm(string $type, int $id): array
     {
         $DB = $this->loris->getDatabaseConnection();
         if ($type == "DCCID" ) {
@@ -257,7 +257,7 @@ class Appointment extends \NDB_Page
             }
             $res = "";
             if ($type !== "Edit") {
-                $res = $this->getMetaForm($type, $id);
+                $res = $this->getMetaForm($type, intval($id));
             }
             return (new \LORIS\Http\Response())
                 ->withHeader("Content-Type", "text/plain")

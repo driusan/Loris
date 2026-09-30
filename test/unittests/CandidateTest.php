@@ -147,7 +147,7 @@ class CandidateTest extends TestCase
         $this->_candidateInfo = [
             'ID'                    => 111111,
             'RegistrationCenterID'  => 2,
-            'CandID'                => new CandID('969664'),
+            'CandID'                => new CandID(969664),
             'PSCID'                 => 'AAA0011',
             'DoB'                   => '2007-03-02',
             'EDC'                   => null,
@@ -242,7 +242,7 @@ class CandidateTest extends TestCase
     public function testsSelectFailsWhenInvalidCandidateIdPassed()
     {
         $this->expectException('DomainException');
-        $this->_candidate->select(new CandID('88888'));
+        $this->_candidate->select(new CandID(88888));
     }
 
     /**
@@ -576,7 +576,7 @@ class CandidateTest extends TestCase
         // Initialize candidate
         $this->_candidate->select(
             new LORIS\StudyEntities\Candidate\CandID(
-                strval($this->_candidateInfo['CandID'])
+                $this->_candidateInfo['CandID']
             )
         );
 
@@ -836,7 +836,7 @@ class CandidateTest extends TestCase
 
         $this->assertFalse(
             Candidate::candidateExists(
-                new CandID("123123"),
+                new CandID(123123),
                 'Test'
             )
         );

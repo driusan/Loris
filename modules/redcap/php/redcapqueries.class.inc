@@ -104,7 +104,7 @@ class RedcapQueries
      */
     public function tryGetCandidateWithPscId(string $psc_id): ?\Candidate
     {
-        $cand_id = $this->_db->pselectOne(
+        $cand_id = $this->_db->pselectOneInt(
             "SELECT CandID FROM candidate WHERE PSCID = :psc_id",
             ['psc_id' => $psc_id],
         );
@@ -127,7 +127,7 @@ class RedcapQueries
     public function tryGetCandidateWithCandId(string $cand_id): ?\Candidate
     {
         // Check that the candidate exists first.
-        $cand_id = $this->_db->pselectOne(
+        $cand_id = $this->_db->pselectOneInt(
             "SELECT CandID FROM candidate WHERE CandID = :cand_id",
             ['cand_id' => $cand_id],
         );
@@ -150,7 +150,7 @@ class RedcapQueries
     public function tryGetCandidateWithExternalId(string $external_id): ?\Candidate
     {
         // Check that the candidate exists first.
-        $cand_id = $this->_db->pselectOne(
+        $cand_id = $this->_db->pselectOneInt(
             "SELECT CandID FROM candidate WHERE ExternalID = :external_id",
             ['external_id' => $external_id],
         );

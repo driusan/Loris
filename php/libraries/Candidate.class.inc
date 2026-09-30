@@ -1282,10 +1282,10 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
      */
     static public function filterInaccessibleCandIDs(
         \LORIS\LorisInstance $loris,
-        array $candIDs,
+        iterable $candIDs,
         \User $user,
     ) : iterable {
-        if (count($candIDs) == 0) {
+        if (iterator_count($candIDs) == 0) {
             return [];
         }
         $DB = $loris->getNewDatabaseConnection();
@@ -1301,10 +1301,23 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
 	    PRIMARY KEY(CandID)
         );"
         );
-        $insertstmt = "INSERT INTO accesscandidates VALUES"
-                . " (" . join('),(', $candIDs) . ')';
+
+	$DB->beginTransaction();
+	foreach(array_chunk(iterator_to_array($candIDs), 2000) as $chunk) {
+		$insertstmt = "INSERT INTO accesscandidates VALUES"
+			. " (" . join('),(', $chunk) . ')';
+		$q          = $DB->prepare($insertstmt);
+		$q->execute([]);
+	}
+	$DB->commit();
+	/*
+	$DB->beginTransaction();
+        $insertstmt = "INSERT INTO accesscandidates VALUES (?)";
         $q          = $DB->prepare($insertstmt);
-        $q->execute([]);
+	foreach($candIDs as $_ => $candID) {
+		$q->execute([$candID]);
+	}
+	 */
 
         // Get the data which affects accessibility in bulk.
         $rows      = $DB->pselect(
@@ -1331,7 +1344,7 @@ class Candidate implements \LORIS\StudyEntities\AccessibleResource,
                     }
                 }
                 $canddata  = new \CandidateData(
-                    candID: new CandID(strval($row['CandID'])),
+                    candID: new CandID($row['CandID']),
                     registrationProjectID: $row['RegistrationProjectID'] !== null
                     ? \ProjectID::singleton($row['RegistrationProjectID'])
                     : null,

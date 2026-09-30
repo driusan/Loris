@@ -18,9 +18,7 @@ require "bvl_panel_ajax.php";
 $user     =& User::singleton();
 $username = $user->getUsername();
 
-try {
-    $candid = new \LORIS\StudyEntities\Candidate\CandID($_POST['candID'] ?? '');
-} catch (\DomainException $e) {
+if(\LORIS\StudyEntities\Candidate\CandID::validate($_POST['candID'] ?? 0) == false) {
     header("HTTP/1.1 400 Bad Request");
     header("Content-Type: application/json");
     print json_encode(['error' => 'invalid candID']);
