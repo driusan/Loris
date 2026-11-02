@@ -921,7 +921,6 @@ class NDB_Page extends \LORIS\Http\Endpoint implements
             $baseurl . '/js/loris-scripts.js',
             $baseurl . '/js/modernizr/modernizr.min.js',
                   // Only load minified file on production, not sandboxes
-            $baseurl . '/js/polyfills.js',
                     // $baseurl . '/js/react/react-with-addons' . $min . '.js',
                     // $baseurl . '/js/react/react-dom' . $min . '.js',
             $baseurl . ($min === '' ?
@@ -931,7 +930,6 @@ class NDB_Page extends \LORIS\Http\Endpoint implements
                       '/vendor/js/react/react-dom.development.js' :
                       '/vendor/js/react/react-dom.production' . $min . '.js'),
 
-            $baseurl . '/js/jquery/jquery-ui-1.10.4.custom.min.js',
             $baseurl . '/js/jquery.dynamictable.js',
             $baseurl . '/js/jquery.fileupload.js',
             $baseurl . '/bootstrap/js/bootstrap.min.js',
