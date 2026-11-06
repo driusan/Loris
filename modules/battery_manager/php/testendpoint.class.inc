@@ -12,6 +12,7 @@
  * @link     https://www.github.com/aces/Loris/
  */
 namespace LORIS\battery_manager;
+use \LORIS\Http\HttpMethod;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Server\RequestHandlerInterface;
 use \Psr\Http\Message\ResponseInterface;
@@ -86,20 +87,20 @@ class TestEndpoint extends \NDB_Page implements RequestHandlerInterface
      *
      * @return ResponseInterface The outgoing PSR7 response
      */
+    #[\Override]
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
         $this->db   = $this->loris->getDatabaseConnection();
         $this->user = $request->getAttribute('user');
-        $method     = $request->getMethod();
 
-        switch ($method) {
-        case 'GET':
-            return $this->_getInstances();
-        case 'POST':
-            return $this->_postInstance($request);
-        case 'PUT':
-            return $this->_putInstance($request);
-        }
+        return match (HttpMethod::from($request->getMethod())) {
+            HttpMethod::GET => $this->_getInstances(),
+            HttpMethod::POST => $this->_postInstance($request),
+            HttpMethod::PUT => $this->_putInstance($request),
+            default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
+                ['GET', 'POST', 'PUT']
+            ),
+        };
     }
 
     /**

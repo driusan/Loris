@@ -14,6 +14,7 @@ namespace LORIS\api\Endpoints\Candidate\Visit\Dicom;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \LORIS\api\Endpoint;
+use \LORIS\Http\HttpMethod;
 
 use \LORIS\server_processes_manager\ServerProcessLauncher;
 use \LORIS\server_processes_manager\ServerProcessesMonitor;
@@ -95,22 +96,15 @@ class Processes extends Endpoint implements \LORIS\Middleware\ETagCalculator
     {
         $path_parts = $request->getAttribute('pathparts');
         if (count($path_parts) === 0) {
-            switch ($request->getMethod()) {
-            case 'GET':
-                return $this->_handleGET($request);
-
-            case 'POST':
-                return $this->_handlePOST($request);
-
-            case 'OPTIONS':
-                return (new \LORIS\Http\Response())
-                    ->withHeader('Allow', $this->allowedMethods());
-
-            default:
-                return new \LORIS\Http\Response\JSON\MethodNotAllowed(
+            return match (HttpMethod::from($request->getMethod())) {
+                HttpMethod::GET => $this->_handleGET($request),
+                HttpMethod::POST => $this->_handlePOST($request),
+                HttpMethod::OPTIONS => (new \LORIS\Http\Response())
+                    ->withHeader('Allow', $this->allowedMethods()),
+                default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
                     $this->allowedMethods()
-                );
-            }
+                ),
+            };
         }
 
         // Delegate to sub-endpoints

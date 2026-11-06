@@ -16,6 +16,7 @@ namespace LORIS\api\Endpoints\Candidate\Visit\Dicom;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \LORIS\api\Endpoint;
+use \LORIS\Http\HttpMethod;
 
 /**
  * A class for handling request for a visit specific dicom.
@@ -97,19 +98,14 @@ class Dicom extends Endpoint implements \LORIS\Middleware\ETagCalculator
     {
         $pathparts = $request->getAttribute('pathparts');
         if (count($pathparts) === 0) {
-            switch ($request->getMethod()) {
-            case 'GET':
-                return $this->_handleGET($request);
-
-            case 'OPTIONS':
-                return (new \LORIS\Http\Response())
-                    ->withHeader('Allow', $this->allowedMethods());
-
-            default:
-                return new \LORIS\Http\Response\JSON\MethodNotAllowed(
+            return match (HttpMethod::from($request->getMethod())) {
+                HttpMethod::GET => $this->_handleGET($request),
+                HttpMethod::OPTIONS => (new \LORIS\Http\Response())
+                    ->withHeader('Allow', $this->allowedMethods()),
+                default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
                     $this->allowedMethods()
-                );
-            }
+                ),
+            };
         }
 
         // Delegate to sub-endpoints

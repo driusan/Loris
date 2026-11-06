@@ -5,6 +5,7 @@ namespace LORIS\login;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \LORIS\Middleware\ETagCalculator;
+use \LORIS\Http\HttpMethod;
 use SinglePointLogin;
 use State;
 

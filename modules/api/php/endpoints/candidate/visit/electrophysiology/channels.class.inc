@@ -13,6 +13,7 @@ namespace LORIS\api\Endpoints\Candidate\Visit\Electrophysiology;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 use \LORIS\api\Endpoint;
+use \LORIS\Http\HttpMethod;
 
 /**
  * This class handles request to a recording's channel information.
@@ -90,19 +91,14 @@ class Channels extends Endpoint implements \LORIS\Middleware\ETagCalculator
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        switch ($request->getMethod()) {
-        case 'GET':
-            return $this->_handleGET($request);
-
-        case 'OPTIONS':
-            return (new \LORIS\Http\Response())
-                ->withHeader('Allow', $this->allowedMethods());
-
-        default:
-            return new \LORIS\Http\Response\JSON\MethodNotAllowed(
+        return match (HttpMethod::from($request->getMethod())) {
+            HttpMethod::GET => $this->_handleGET($request),
+            HttpMethod::OPTIONS => (new \LORIS\Http\Response())
+                ->withHeader('Allow', $this->allowedMethods()),
+            default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
                 $this->allowedMethods()
-            );
-        }
+            ),
+        };
     }
 
     /**

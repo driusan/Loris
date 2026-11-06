@@ -15,6 +15,7 @@
 namespace LORIS\user_accounts;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use \Loris\Http\HttpMethod;
 
 /**
  * Implements the user account page
