@@ -31,17 +31,14 @@ class Authentication extends \NDB_Page implements ETagCalculator
      */
     public function handle(ServerRequestInterface $request) : ResponseInterface
     {
-        // Ensure GET or POST request.
-        switch ($request->getMethod()) {
-        case 'GET':
-            return $this->_handleGET($request);
-        case 'POST':
-            return $this->_handlePOST($request);
-        default:
-            return new \LORIS\Http\Response\JSON\MethodNotAllowed(
+
+        return match (HttpMethod::from($request->getMethod())) {
+            HttpMethod::GET => $this->_handleGET($request),
+            HttpMethod::POST => $this->_handlePOST($request),
+            default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
                 $this->allowedMethods()
-            );
-        }
+            )
+        };
     }
 
     /**

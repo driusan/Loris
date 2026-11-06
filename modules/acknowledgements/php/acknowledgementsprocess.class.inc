@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace LORIS\acknowledgements;
+use \LORIS\Http\HttpMethod;
 use \Psr\Http\Message\ServerRequestInterface;
 use \Psr\Http\Message\ResponseInterface;
 
@@ -41,14 +42,12 @@ class Acknowledgementsprocess extends \NDB_Page
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        switch ($request->getMethod()) {
-        case "POST":
-            return $this->createAcknowledgement($request);
-        default:
-            return new \LORIS\Http\Response\JSON\MethodNotAllowed(
+        return match (HttpMethod::from($request->getMethod())) {
+            HttpMethod::POST => $this->createAcknowledgement($request),
+            default => new \LORIS\Http\Response\JSON\MethodNotAllowed(
                 $this->allowedMethods()
-            );
-        }
+            ),
+        };
     }
 
     /**
